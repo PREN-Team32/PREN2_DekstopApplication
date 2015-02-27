@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pren2_desktopapplication;
+package desktopapplication.view;
 
 /**
  *
  * @author Niklaus
  */
-public class PREN2_DesktopApplication {
+public class View {
 
     /**
      * @param args the command line arguments
