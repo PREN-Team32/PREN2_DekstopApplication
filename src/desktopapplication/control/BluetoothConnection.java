@@ -9,6 +9,6 @@ package desktopapplication.control;
  *
  * @author Niklaus
  */
-public class Control {
+public class BluetoothConnection {
     
 }
