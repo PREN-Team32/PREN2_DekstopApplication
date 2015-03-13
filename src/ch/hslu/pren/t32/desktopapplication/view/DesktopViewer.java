@@ -115,8 +115,9 @@ public class DesktopViewer extends javax.swing.JFrame {
 
         testrun.setText("Testrun");
 
+        start.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         start.setText("Start");
-        start.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0), 3));
+        start.setBorder(null);
 
         connectionStatusIcon.setMaximumSize(new java.awt.Dimension(25, 25));
         connectionStatusIcon.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -292,7 +293,7 @@ public class DesktopViewer extends javax.swing.JFrame {
     }
     
     private void loadBluetoothStatusIcon() {
-        ImageIcon statusIcon = new ImageIcon("resources/redIcon.png");
+        ImageIcon statusIcon = new ImageIcon("res/redIcon.png");
         connectionStatusIcon.setIcon(statusIcon);
         connectionStatusIcon.repaint();
         
