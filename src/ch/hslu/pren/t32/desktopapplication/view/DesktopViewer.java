@@ -45,15 +45,15 @@ public class DesktopViewer extends javax.swing.JFrame {
         wasFound = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         totalTimeUsed = new javax.swing.JTextField();
-        analyzePixels = new javax.swing.JButton();
-        findShape = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
-        chooseInput = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         drawMainArea = new javax.swing.JButton();
+        drawShapeBorder = new javax.swing.JButton();
+        connectBluetooth = new javax.swing.JButton();
+        testrun = new javax.swing.JButton();
+        start = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         imageLabel = new javax.swing.JLabel();
 
@@ -61,6 +61,8 @@ public class DesktopViewer extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        luminanceSlider.setToolTipText("");
+        luminanceSlider.setValue(30);
         luminanceSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 luminanceSliderStateChanged(evt);
@@ -72,7 +74,7 @@ public class DesktopViewer extends javax.swing.JFrame {
         jTextField1.setEnabled(false);
 
         luminanceThreshold.setEditable(false);
-        luminanceThreshold.setText("0.5 f");
+        luminanceThreshold.setText("0.3 f");
 
         jTextField3.setEditable(false);
         jTextField3.setText("  Main Area:");
@@ -93,34 +95,6 @@ public class DesktopViewer extends javax.swing.JFrame {
 
         totalTimeUsed.setEditable(false);
 
-        analyzePixels.setText("2. Analyze Pixels");
-        analyzePixels.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                analyzePixelsMouseClicked(evt);
-            }
-        });
-
-        findShape.setText("3. Find shape");
-        findShape.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                findShapeMouseClicked(evt);
-            }
-        });
-
-        jButton4.setText("4. Calculate Angle");
-        jButton4.setEnabled(false);
-
-        jTextField5.setEditable(false);
-        jTextField5.setText("Choose Input-Image:");
-        jTextField5.setEnabled(false);
-
-        chooseInput.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "HTC1", "HTC2", "HTC3", "Nexus1", "Nexus2", "Nexus3" }));
-        chooseInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseInputActionPerformed(evt);
-            }
-        });
-
         drawMainArea.setText("Draw Line");
         drawMainArea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -128,50 +102,69 @@ public class DesktopViewer extends javax.swing.JFrame {
             }
         });
 
+        drawShapeBorder.setText("Draw Border");
+        drawShapeBorder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                drawShapeBorderMouseClicked(evt);
+            }
+        });
+
+        connectBluetooth.setText("Connect via Bluetooth");
+
+        testrun.setText("Testrun");
+
+        start.setText("Start");
+        start.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0), 3));
+
+        jTextField2.setText("Connection Status");
+        jTextField2.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addComponent(jSeparator2)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(luminanceSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
-            .addComponent(jSeparator1)
-            .addComponent(jSeparator2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(drawShapeBorder, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextField1)
+                                .addGap(63, 63, 63))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(chooseInput, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(analyzePixels, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(findShape, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField1)
-                                        .addGap(67, 67, 67))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(mainArea)
-                                    .addComponent(luminanceThreshold)
-                                    .addComponent(wasFound)
-                                    .addComponent(drawMainArea, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))))
-                        .addContainerGap())
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(mainArea)
+                            .addComponent(luminanceThreshold, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                            .addComponent(wasFound, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(drawMainArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                        .addComponent(totalTimeUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(totalTimeUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(testrun, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(connectBluetooth, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE))
         );
@@ -179,16 +172,14 @@ public class DesktopViewer extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(connectBluetooth)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chooseInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(analyzePixels)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(findShape)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addGap(67, 67, 67)
+                .addComponent(testrun)
+                .addGap(32, 32, 32)
+                .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(luminanceThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -208,16 +199,18 @@ public class DesktopViewer extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(wasFound, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(drawShapeBorder)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(totalTimeUsed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(177, Short.MAX_VALUE)
+                    .addContainerGap(185, Short.MAX_VALUE)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(300, 300, 300)))
+                    .addGap(324, 324, 324)))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -261,49 +254,10 @@ public class DesktopViewer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void chooseInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseInputActionPerformed
-        JComboBox cb = (JComboBox)evt.getSource();
-        String selectedFile = (String)cb.getSelectedItem();
-        this.filePath = selectedFile + ".jpg";
-        //this.detektor = new Detector(filePath);
-        mainArea.setText("");
-        wasFound.setText("false");
-        wasFound.selectAll();
-        wasFound.setForeground(Color.red);
-        totalTimeUsed.setText("");
-        loadImage();
-        currentState = state.ImageLoaded;
-    }//GEN-LAST:event_chooseInputActionPerformed
-
-    private void analyzePixelsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analyzePixelsMouseClicked
-        //detektor.start();
-        //ImageIcon image = new ImageIcon(detektor.getEditedImage());
-        //imageLabel.setIcon(image);
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
-        imageLabel.setText("");
-        imageLabel.repaint();
-        jPanel3.repaint();
-        currentState = state.PixelAnalized;
-    }//GEN-LAST:event_analyzePixelsMouseClicked
-
-    private void findShapeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_findShapeMouseClicked
-        StringBuilder sb = new StringBuilder();
-        //sb.append(detektor.getMainAreaX());
-        mainArea.setText("X = " +sb.toString());
-        sb = new StringBuilder();
-        //sb.append(detektor.getGebrauchteZeit());
-        sb.append(" ms");
-        totalTimeUsed.setText(sb.toString());
-        wasFound.setText("true");
-        wasFound.selectAll();
-        wasFound.setForeground(Color.GREEN);
-        currentState = state.ShapeFound;
-    }//GEN-LAST:event_findShapeMouseClicked
-
     private void drawMainAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawMainAreaMouseClicked
-        //detektor.drawMainArea();
-        //ImageIcon image = new ImageIcon(detektor.getEditedImage());
-        //imageLabel.setIcon(image);
+//        detektor.drawMainArea();
+//        ImageIcon image = new ImageIcon(detektor.getEditedImage());
+//        imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
@@ -313,12 +267,16 @@ public class DesktopViewer extends javax.swing.JFrame {
         float value = luminanceSlider.getValue();
         value = value/100.00f;
         luminanceThreshold.setText(value + " f");
-        //Detector.setLuminanceThreshold(value);
+//        Detector.setLuminanceThreshold(value);
     }//GEN-LAST:event_luminanceSliderStateChanged
+
+    private void drawShapeBorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawShapeBorderMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_drawShapeBorderMouseClicked
     
     private void loadImage(){
-        //ImageIcon image = new ImageIcon(detektor.getOriginalImage());
-        //imageLabel.setIcon(image);
+//        ImageIcon image = new ImageIcon(detektor.getOriginalImage());
+//        imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
@@ -361,25 +319,25 @@ public class DesktopViewer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton analyzePixels;
-    private javax.swing.JComboBox chooseInput;
+    private javax.swing.JButton connectBluetooth;
     private javax.swing.JButton drawMainArea;
-    private javax.swing.JButton findShape;
+    private javax.swing.JButton drawShapeBorder;
     private javax.swing.JLabel imageLabel;
-    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JSlider luminanceSlider;
     private javax.swing.JTextField luminanceThreshold;
     private javax.swing.JTextField mainArea;
+    private javax.swing.JButton start;
+    private javax.swing.JButton testrun;
     private javax.swing.JTextField totalTimeUsed;
     private javax.swing.JTextField wasFound;
     // End of variables declaration//GEN-END:variables
