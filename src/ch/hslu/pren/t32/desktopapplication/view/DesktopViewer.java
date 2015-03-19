@@ -5,9 +5,8 @@
  */
 package ch.hslu.pren.t32.desktopapplication.view;
 
-import java.awt.Color;
+import ch.hslu.pren.t32.desktopapplication.control.ValueHandler;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 /**
@@ -15,9 +14,7 @@ import javax.swing.JLabel;
  * @author Niklaus
  */
 public class DesktopViewer extends javax.swing.JFrame {
-    private String filePath = "HTC1.jpg";
-    private enum state { ImageLoaded, PixelAnalized, ShapeFound  };
-    private state currentState;
+    private ValueHandler connectionHandler;
 
     /**
      * Creates new form DesktopViewer
@@ -295,8 +292,7 @@ public class DesktopViewer extends javax.swing.JFrame {
     private void loadBluetoothStatusIcon() {
         ImageIcon statusIcon = new ImageIcon("res/redIcon.png");
         connectionStatusIcon.setIcon(statusIcon);
-        connectionStatusIcon.repaint();
-        
+        connectionStatusIcon.repaint();        
     }
     /**
      * @param args the command line arguments
