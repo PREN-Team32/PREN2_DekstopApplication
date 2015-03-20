@@ -18,6 +18,7 @@ public class ValueItem implements Serializable{
     public File editedImage;
     
     public int mainArea;
+    public int objectBorder;
     public int totalTimeUsed;
     public boolean foundShape;
     public double calculatedAngle;

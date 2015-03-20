@@ -24,6 +24,10 @@ public class ValueReceiver {
         this.values = new ValueItem();
     }
     
+    public void setItem(ValueItem newValues) {
+        this.values = newValues;
+    }
+    
     public BufferedImage getOriginalImage() {
         BufferedImage originalImage = loadImage(values.originalImage);
         if(originalImage == null) {
@@ -42,6 +46,10 @@ public class ValueReceiver {
     
     public int getMainArea() {
         return values.mainArea;
+    }
+    
+    public int getObjectBorder() {
+        return values.objectBorder;
     }
     
     public int getTotalTimeUsed() {
@@ -64,5 +72,9 @@ public class ValueReceiver {
             System.err.println("Error in InputHandler: " + ex.getMessage());
         }
         return null;
+    }
+    
+    public void receiveValues() {
+        //TODO
     }
 }

@@ -5,16 +5,20 @@
  */
 package ch.hslu.pren.t32.desktopapplication.view;
 
-import ch.hslu.pren.t32.desktopapplication.control.ValueReceiver;
+import ch.hslu.pren.t32.desktopapplication.control.*;
+import ch.hslu.pren.t32.model.ValueItem;
+import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Niklaus
  */
 public class DesktopViewer extends javax.swing.JFrame {
-    private ValueReceiver connectionHandler;
+    private ValueReceiver receiver;
+    private ConfigSender sender;
 
     /**
      * Creates new form DesktopViewer
@@ -22,6 +26,8 @@ public class DesktopViewer extends javax.swing.JFrame {
     public DesktopViewer() {
         initComponents();
         loadBluetoothStatusIcon();
+        this.receiver = new ValueReceiver();
+        this.sender = new ConfigSender();
     }
 
     /**
@@ -111,6 +117,11 @@ public class DesktopViewer extends javax.swing.JFrame {
         connectBluetooth.setText("Connect via Bluetooth");
 
         testrun.setText("Testrun");
+        testrun.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                testrunMouseClicked(evt);
+            }
+        });
 
         start.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         start.setText("Start");
@@ -261,9 +272,9 @@ public class DesktopViewer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void drawMainAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawMainAreaMouseClicked
-//        detektor.drawMainArea();
-//        ImageIcon image = new ImageIcon(detektor.getEditedImage());
-//        imageLabel.setIcon(image);
+        ImageHandler.drawVerticalLine(receiver.getEditedImage(), receiver.getMainArea(), com.sun.prism.paint.Color.BLUE);
+        ImageIcon image = new ImageIcon(receiver.getEditedImage());
+        imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
@@ -273,16 +284,43 @@ public class DesktopViewer extends javax.swing.JFrame {
         float value = luminanceSlider.getValue();
         value = value/100.00f;
         luminanceThreshold.setText(value + " f");
-//        Detector.setLuminanceThreshold(value);
     }//GEN-LAST:event_luminanceSliderStateChanged
 
     private void drawShapeBorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawShapeBorderMouseClicked
-        // TODO add your handling code here:
+        ImageHandler.drawVerticalLine(receiver.getEditedImage(), receiver.getObjectBorder(), com.sun.prism.paint.Color.GREEN);
+        ImageIcon image = new ImageIcon(receiver.getEditedImage());
+        imageLabel.setIcon(image);
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setText("");
+        imageLabel.repaint();
     }//GEN-LAST:event_drawShapeBorderMouseClicked
+
+    private void testrunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_testrunMouseClicked
+        sender.setLuminanceThreshold(luminanceSlider.getValue());
+        sender.sendConfig();
+    }//GEN-LAST:event_testrunMouseClicked
+        
+    public void updateValues(ValueItem newValues) {
+        JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
+        receiver.setItem(newValues);
+        mainArea.setText(Integer.toString(receiver.getMainArea()));
+        totalTimeUsed.setText(receiver.getTotalTimeUsed() + "ms");
+        if(receiver.hasFoundShape()) {
+            wasFound.setText("true");
+            wasFound.selectAll();
+            wasFound.setForeground(Color.GREEN);
+        }
+        else {
+            wasFound.setText("false");
+            wasFound.selectAll();
+            wasFound.setForeground(Color.RED);
+        }
+        
+    }
     
     private void loadImage(){
-//        ImageIcon image = new ImageIcon(detektor.getOriginalImage());
-//        imageLabel.setIcon(image);
+        ImageIcon image = new ImageIcon(receiver.getOriginalImage());
+        imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
@@ -294,6 +332,7 @@ public class DesktopViewer extends javax.swing.JFrame {
         connectionStatusIcon.setIcon(statusIcon);
         connectionStatusIcon.repaint();        
     }
+    
     /**
      * @param args the command line arguments
      */

@@ -37,4 +37,8 @@ public class ConfigSender {
     public void setStartSignal(boolean signal) {
         config.startSignal = signal;
     }
+    
+    public void sendConfig() {
+        //TODO
+    }
 }
