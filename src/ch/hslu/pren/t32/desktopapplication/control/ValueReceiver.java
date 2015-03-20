@@ -73,8 +73,4 @@ public class ValueReceiver {
         }
         return null;
     }
-    
-    public void receiveValues() {
-        //TODO
-    }
 }

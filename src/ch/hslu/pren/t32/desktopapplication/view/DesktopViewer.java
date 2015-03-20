@@ -8,6 +8,7 @@ package ch.hslu.pren.t32.desktopapplication.view;
 import ch.hslu.pren.t32.desktopapplication.control.*;
 import ch.hslu.pren.t32.model.ValueItem;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -302,7 +303,7 @@ public class DesktopViewer extends javax.swing.JFrame {
         
     public void updateValues(ValueItem newValues) {
         JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
-        loadImage();
+        loadImage(receiver.getEditedImage());
         receiver.setItem(newValues);
         mainArea.setText(Integer.toString(receiver.getMainArea()));
         totalTimeUsed.setText(receiver.getTotalTimeUsed() + "ms");
@@ -319,9 +320,9 @@ public class DesktopViewer extends javax.swing.JFrame {
         
     }
     
-    private void loadImage(){
-        ImageIcon image = new ImageIcon(receiver.getEditedImage());
-        imageLabel.setIcon(image);
+    private void loadImage(BufferedImage image){
+        ImageIcon imageIco = new ImageIcon(image);
+        imageLabel.setIcon(imageIco);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
