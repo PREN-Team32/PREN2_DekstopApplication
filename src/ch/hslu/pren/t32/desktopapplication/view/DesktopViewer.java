@@ -302,6 +302,7 @@ public class DesktopViewer extends javax.swing.JFrame {
         
     public void updateValues(ValueItem newValues) {
         JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
+        loadImage();
         receiver.setItem(newValues);
         mainArea.setText(Integer.toString(receiver.getMainArea()));
         totalTimeUsed.setText(receiver.getTotalTimeUsed() + "ms");
@@ -319,7 +320,7 @@ public class DesktopViewer extends javax.swing.JFrame {
     }
     
     private void loadImage(){
-        ImageIcon image = new ImageIcon(receiver.getOriginalImage());
+        ImageIcon image = new ImageIcon(receiver.getEditedImage());
         imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
