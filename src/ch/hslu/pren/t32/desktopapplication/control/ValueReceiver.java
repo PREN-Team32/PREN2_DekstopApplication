@@ -17,10 +17,10 @@ import javax.imageio.ImageIO;
  *
  * @author Niklaus
  */
-public class ValueHandler {
+public class ValueReceiver {
     private ValueItem values;
     
-    public ValueHandler() {
+    public ValueReceiver() {
         this.values = new ValueItem();
     }
     

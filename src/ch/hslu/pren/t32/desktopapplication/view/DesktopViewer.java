@@ -5,7 +5,7 @@
  */
 package ch.hslu.pren.t32.desktopapplication.view;
 
-import ch.hslu.pren.t32.desktopapplication.control.ValueHandler;
+import ch.hslu.pren.t32.desktopapplication.control.ValueReceiver;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  * @author Niklaus
  */
 public class DesktopViewer extends javax.swing.JFrame {
-    private ValueHandler connectionHandler;
+    private ValueReceiver connectionHandler;
 
     /**
      * Creates new form DesktopViewer

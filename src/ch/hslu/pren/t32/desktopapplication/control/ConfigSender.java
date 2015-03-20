@@ -11,10 +11,10 @@ import ch.hslu.pren.t32.model.ConfigurationItem;
  *
  * @author Niklaus
  */
-public class ConfigHandler {
+public class ConfigSender {
     private ConfigurationItem config;
     
-    public ConfigHandler() {
+    public ConfigSender() {
         this.config = new ConfigurationItem();
     }
     
