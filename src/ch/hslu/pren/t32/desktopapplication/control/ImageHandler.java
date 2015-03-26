@@ -16,11 +16,15 @@ import javax.imageio.ImageIO;
  *
  * @author Niklaus
  */
-public class ImageHandler {        
+public final class ImageHandler {        
     protected static int INITIAL_IMAGE_WIDTH = 888;
     protected static int INITIAL_IMAGE_HEIGHT = 500;
     protected static int WIDTH_TO_OBSERVE = 488;
     protected static int HEIGHT_TO_OBSERVE = 500;
+    
+    private ImageHandler() {
+        //static Top-Level class doesn't need to be instantiated..
+    }
 
     public static void setObservedWidth(int WIDTH_TO_OBSERVE) {
         ImageHandler.WIDTH_TO_OBSERVE = WIDTH_TO_OBSERVE;

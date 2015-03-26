@@ -14,7 +14,7 @@ import ch.hslu.pren.t32.desktopapplication.view.DesktopViewer;
 public class Main {
     public static void main(String[] args) {
         initLookAndFeel();
-        /* Create and display the form */
+        /* Create and display the Viewer */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new DesktopViewer().setVisible(true);
