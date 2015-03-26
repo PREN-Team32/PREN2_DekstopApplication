@@ -15,7 +15,7 @@ public class ConfigSender {
     private ConfigurationItem config;
     
     public ConfigSender() {
-        this.config = new ConfigurationItem();
+        this.config = ConfigurationItem.getInstance();
     }
     
     public void setLuminanceThreshold(float threshold) {

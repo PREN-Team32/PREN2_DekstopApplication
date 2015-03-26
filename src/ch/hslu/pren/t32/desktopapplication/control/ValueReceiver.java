@@ -21,7 +21,7 @@ public class ValueReceiver {
     private ValueItem values;
     
     public ValueReceiver() {
-        this.values = new ValueItem();
+        this.values = ValueItem.getInstance();
     }
     
     public void setItem(ValueItem newValues) {

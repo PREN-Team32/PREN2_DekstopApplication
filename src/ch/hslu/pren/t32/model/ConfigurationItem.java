@@ -13,6 +13,9 @@ import java.io.Serializable;
  * @author Nikk
  */
 public class ConfigurationItem implements Serializable {
+    private static ConfigurationItem singeltonInstance;
+    
+    //Struct-Values:
     public float luminanceThreshold;
     
     //Width & Height which will be analysed (Rest of Image will be cut off)
@@ -25,11 +28,18 @@ public class ConfigurationItem implements Serializable {
     //Boolean flag to indicate start
     public boolean startSignal;
     
-    public ConfigurationItem() {
+    private ConfigurationItem() {
         this.luminanceThreshold = 0.3f;
         this.widthToObserve = 488;
         this.heightToObserve = 500;
         this.visitedPixels = 3;
         this.startSignal = false;
+    }
+    
+    public static ConfigurationItem getInstance() {
+        if(singeltonInstance == null) {
+            singeltonInstance = new ConfigurationItem();
+        }
+        return singeltonInstance;
     }
 }  
