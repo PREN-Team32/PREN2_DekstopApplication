@@ -7,12 +7,11 @@ package ch.hslu.pren.t32.desktopapplication.control;
 
 import ch.hslu.pren.t32.desktopapplication.view.DesktopViewer;
 import ch.hslu.pren.t32.model.ValueItem;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author Niklaus * 
+ * @author Niklaus *
+ * Checks the BluetoothConnection for wheter new Values are incoming or not.
  */
 public class ConnectionCheckerThread implements Runnable {
     private DesktopViewer observer;

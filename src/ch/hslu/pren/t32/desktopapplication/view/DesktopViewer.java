@@ -28,7 +28,7 @@ public class DesktopViewer extends javax.swing.JFrame {
         initComponents();
         loadBluetoothStatusIcon();
         this.receiver = new ValueReceiver();
-        this.sender = new ConfigSender();        
+        this.sender = new ConfigSender();
     }
 
     /**
