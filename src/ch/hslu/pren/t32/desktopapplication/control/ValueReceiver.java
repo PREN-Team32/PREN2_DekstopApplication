@@ -7,9 +7,11 @@ package ch.hslu.pren.t32.desktopapplication.control;
 
 import ch.hslu.pren.t32.model.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -27,7 +29,7 @@ public class ValueReceiver {
     }
     
     public BufferedImage getOriginalImage() {
-        BufferedImage originalImage = loadImage(values.originalImage);
+        BufferedImage originalImage = Base64toImage(values.originalImage);
         if(originalImage == null) {
             System.out.println("OriginalImage could not be loaded.");
         }
@@ -35,7 +37,7 @@ public class ValueReceiver {
     }
     
     public BufferedImage getEditedImage() {
-        BufferedImage editedImage = loadImage(values.editedImage);
+        BufferedImage editedImage = Base64toImage(values.editedImage);
         if(editedImage == null) {
             System.out.println("EditedImage could not be loaded.");
         }
@@ -62,6 +64,7 @@ public class ValueReceiver {
         return values.calculatedAngle;
     }
     
+    //ToDo: Methode löschen wenn wirklich nicht mehr gebraucht
     private BufferedImage loadImage(File file){
         try {
             BufferedImage image = ImageIO.read(file);
@@ -70,5 +73,21 @@ public class ValueReceiver {
             System.err.println("Error in InputHandler: " + ex.getMessage());
         }
         return null;
+    }
+    
+    //Added by Livio
+     private BufferedImage Base64toImage(String imageString){
+          BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 }

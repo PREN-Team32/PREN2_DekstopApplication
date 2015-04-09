@@ -124,7 +124,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="connectBluetooth" min="-2" max="-2" attributes="0"/>
-                      <Component id="connectionStatusIcon" pref="25" max="32767" attributes="0"/>
+                      <Component id="connectionStatusIcon" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Component id="testrun" min="-2" max="-2" attributes="0"/>
@@ -284,6 +284,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="connectionStatusIcon">
           <Properties>

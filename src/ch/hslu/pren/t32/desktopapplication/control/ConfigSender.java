@@ -6,6 +6,10 @@
 package ch.hslu.pren.t32.desktopapplication.control;
 
 import ch.hslu.pren.t32.model.ConfigurationItem;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import javax.microedition.io.StreamConnection;
 
 /**
  *
@@ -38,7 +42,25 @@ public class ConfigSender {
         config.startSignal = signal;
     }
     
-    public void sendConfig() {
-        //TODO
+    public void sendConfig() throws IOException {
+            
+        BluetoothConnection blue = new BluetoothConnection();        
+        StreamConnection mConnection = blue.getConnection();
+        OutputStream os = mConnection.openOutputStream();
+        
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+               
+        try {            
+            byte[] yourBytes = bos.toByteArray();
+
+            
+            os.write(yourBytes);
+            os.flush();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        bos.flush();
     }
 }

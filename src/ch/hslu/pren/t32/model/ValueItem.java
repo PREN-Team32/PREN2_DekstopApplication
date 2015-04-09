@@ -16,9 +16,12 @@ import java.io.Serializable;
 public class ValueItem implements Serializable{
     private static ValueItem singeltonInstance;
     
+    //Needed for identifying the object over serialization
+    private static final long serialVersionUID = 90833161384221638L;
+    
     //Values:
-    public File originalImage;
-    public File editedImage;
+    public String originalImage;
+    public String editedImage;
     
     public int mainArea;
     public int objectBorder;

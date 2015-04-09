@@ -127,6 +127,11 @@ public class DesktopViewer extends javax.swing.JFrame {
         start.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         start.setText("Start");
         start.setBorder(null);
+        start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startActionPerformed(evt);
+            }
+        });
 
         connectionStatusIcon.setMaximumSize(new java.awt.Dimension(25, 25));
         connectionStatusIcon.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -187,7 +192,7 @@ public class DesktopViewer extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(connectBluetooth)
-                    .addComponent(connectionStatusIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                    .addComponent(connectionStatusIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(48, 48, 48)
                 .addComponent(testrun)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -300,6 +305,10 @@ public class DesktopViewer extends javax.swing.JFrame {
         sender.setLuminanceThreshold(luminanceSlider.getValue());
         sender.sendConfig();
     }//GEN-LAST:event_testrunMouseClicked
+
+    private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startActionPerformed
         
     public void updateValues(ValueItem newValues) {
         JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
