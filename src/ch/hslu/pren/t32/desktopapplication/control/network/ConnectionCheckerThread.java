@@ -65,7 +65,7 @@ public class ConnectionCheckerThread implements Runnable {
                 }
                 
                 
-            observer.updateValues(newValues);
+            //observer.updateValues(newValues);
             }
             else {
                 try {

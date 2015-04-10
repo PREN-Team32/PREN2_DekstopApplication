@@ -22,12 +22,8 @@ import javax.swing.JOptionPane;
  */
 public class DesktopViewer extends javax.swing.JFrame {
     private DesktopViewerEventHandler eventHandler;
-    private DesktopViewerControls control;
     
     private boolean bluetoothOnline = false;
-    private BluetoothConnection bluetoothConnection;
-    private ValueReceiver receiver;
-    private ConfigSender sender;
 
     /**
      * Creates new form DesktopViewer
@@ -35,9 +31,6 @@ public class DesktopViewer extends javax.swing.JFrame {
     public DesktopViewer() {
         initComponents();
         loadBluetoothStatusIcon();
-        this.bluetoothConnection = BluetoothConnection.getInstance();
-        this.receiver = new ValueReceiver();
-        this.sender = new ConfigSender();
     }
 
     /**
@@ -293,6 +286,9 @@ public class DesktopViewer extends javax.swing.JFrame {
 
     private void drawMainAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawMainAreaMouseClicked
         eventHandler.drawMainAreaMouseClicked(imageLabel);
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setText("");
+        imageLabel.repaint();
     }//GEN-LAST:event_drawMainAreaMouseClicked
 
     private void luminanceSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_luminanceSliderStateChanged
@@ -301,39 +297,44 @@ public class DesktopViewer extends javax.swing.JFrame {
 
     private void drawShapeBorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawShapeBorderMouseClicked
         eventHandler.drawShapeBorderMouseClicked(imageLabel);
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setText("");
+        imageLabel.repaint();
     }//GEN-LAST:event_drawShapeBorderMouseClicked
 
     private void testrunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_testrunMouseClicked
-        eventHandler.testrunMouseClicked(luminanceSlider);
+        eventHandler.testrunMouseClicked(luminanceSlider.getValue());
     }//GEN-LAST:event_testrunMouseClicked
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-        // TODO add your handling code here:
+        eventHandler.startActionPerformed();
     }//GEN-LAST:event_startActionPerformed
 
     private void connectBluetoothActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBluetoothActionPerformed
-        Thread connection = new Thread(bluetoothConnection);
-        connection.start();
+        eventHandler.connectBluetoothActionPerformed();
+        ImageIcon statusIcon = new ImageIcon("res/greenIcon.png");
+        connectionStatusIcon.setIcon(statusIcon);
+        connectionStatusIcon.repaint();
     }//GEN-LAST:event_connectBluetoothActionPerformed
         
-    public void updateValues(ValueItem newValues) {
-        JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
-        loadImage(receiver.getEditedImage());
-        receiver.setItem(newValues);
-        mainArea.setText(Integer.toString(receiver.getMainArea()));
-        totalTimeUsed.setText(receiver.getTotalTimeUsed() + "ms");
-        if(receiver.hasFoundShape()) {
-            wasFound.setText("true");
-            wasFound.selectAll();
-            wasFound.setForeground(Color.GREEN);
-        }
-        else {
-            wasFound.setText("false");
-            wasFound.selectAll();
-            wasFound.setForeground(Color.RED);
-        }
-        
-    }
+//    public void updateValues(ValueItem newValues) {
+//        JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
+//        loadImage(receiver.getEditedImage());
+//        receiver.setItem(newValues);
+//        mainArea.setText(Integer.toString(receiver.getMainArea()));
+//        totalTimeUsed.setText(receiver.getTotalTimeUsed() + "ms");
+//        if(receiver.hasFoundShape()) {
+//            wasFound.setText("true");
+//            wasFound.selectAll();
+//            wasFound.setForeground(Color.GREEN);
+//        }
+//        else {
+//            wasFound.setText("false");
+//            wasFound.selectAll();
+//            wasFound.setForeground(Color.RED);
+//        }
+//        
+//    }
     
     private void loadImage(BufferedImage image){
         ImageIcon imageIco = new ImageIcon(image);

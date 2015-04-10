@@ -18,21 +18,19 @@ import javax.swing.JTextField;
  * @author Niklaus
  */
 public class DesktopViewerEventHandler {
-    private BluetoothConnection bluetoothConnection;
+    private final BluetoothConnection bluetoothConnection;
     private ValueReceiver receiver;
-    private ConfigSender sender;
+    private ConfigSender sender = null;
     
     public DesktopViewerEventHandler() {
         this.bluetoothConnection = BluetoothConnection.getInstance();
+        this.receiver = new ValueReceiver();
     }
     
     public void drawMainAreaMouseClicked(JLabel imageLabel) {
         ImageHandler.drawVerticalLine(receiver.getEditedImage(), receiver.getMainArea(), com.sun.prism.paint.Color.BLUE);
         ImageIcon image = new ImageIcon(receiver.getEditedImage());
-        imageLabel.setIcon(image);
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
-        imageLabel.setText("");
-        imageLabel.repaint();
+        imageLabel.setIcon(image);        
     }
     
     public void luminanceSliderStateChanged(JSlider luminanceSlider, JTextField luminanceThreshold) {                                             
@@ -44,14 +42,23 @@ public class DesktopViewerEventHandler {
     public void drawShapeBorderMouseClicked(JLabel imageLabel) {                                             
         ImageHandler.drawVerticalLine(receiver.getEditedImage(), receiver.getObjectBorder(), com.sun.prism.paint.Color.GREEN);
         ImageIcon image = new ImageIcon(receiver.getEditedImage());
-        imageLabel.setIcon(image);
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
-        imageLabel.setText("");
-        imageLabel.repaint();
+        imageLabel.setIcon(image);        
     }
     
-    public void testrunMouseClicked(JSlider luminanceSlider) {                                     
-        sender.setLuminanceThreshold(luminanceSlider.getValue());
-        //sender.sendConfig();
+    public void testrunMouseClicked(int luminanceThreshold) {                                     
+        sender.setLuminanceThreshold(luminanceThreshold);
+        sender.sendConfig();
+    }
+    
+    public void startActionPerformed() {                                      
+        sender.setStartSignal(true);
+        sender.sendConfig();
+    }
+    
+    public void connectBluetoothActionPerformed() {
+        if(sender == null) {
+            this.sender = new ConfigSender(bluetoothConnection.getConnection());
+            System.out.println("#DekstopViewer: BluetoothConnection established.");
+        }
     }
 }

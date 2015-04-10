@@ -8,7 +8,10 @@ package ch.hslu.pren.t32.desktopapplication.control.network;
 import ch.hslu.pren.t32.model.ConfigurationItem;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.microedition.io.StreamConnection;
 
 /**
@@ -19,7 +22,7 @@ public class ConfigSender {
     private ConfigurationItem config;
     private StreamConnection mConnection;
     
-    public ConfigSender() {
+    public ConfigSender(StreamConnection mConnection) {
         this.config = ConfigurationItem.getInstance();
     }
     
@@ -43,22 +46,15 @@ public class ConfigSender {
         config.startSignal = signal;
     }
     
-    public void sendConfig() throws IOException {
-        OutputStream os = mConnection.openOutputStream();
-        
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-               
-        try {            
-            byte[] yourBytes = bos.toByteArray();
-
-            
-            os.write(yourBytes);
+    public void sendConfig() {
+        ObjectOutputStream os;
+        try {
+            os = new ObjectOutputStream(mConnection.openOutputStream());
+            os.writeObject(config);
             os.flush();
             os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            System.err.println("#ConfigSender: Could not open ByteArrayOutputstream in sendConfig().");
         }
-        
-        bos.flush();
     }
 }
