@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hslu.pren.t32.desktopapplication.control;
+package ch.hslu.pren.t32.desktopapplication.control.network;
 
 
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.LocalDevice;
 import javax.bluetooth.UUID;
@@ -18,8 +21,18 @@ import javax.microedition.io.StreamConnectionNotifier;
  * @author Niklaus
  */
 public class BluetoothConnection implements Runnable {
-    
     private StreamConnection connection = null;
+    private static BluetoothConnection bluetoothInstance = null;
+    
+    private BluetoothConnection() {
+    }
+    
+    public static BluetoothConnection getInstance() {
+        if(bluetoothInstance == null) {
+            bluetoothInstance = new BluetoothConnection();
+        }
+        return bluetoothInstance;
+    }
     
     @Override
     public void run() {
@@ -27,7 +40,9 @@ public class BluetoothConnection implements Runnable {
     }
     
     public StreamConnection getConnection(){
-        run();
+        if(this.connection == null) {
+            run();
+        }
         return connection;
     }
     
@@ -63,6 +78,16 @@ public class BluetoothConnection implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
+            }
+        }
+    }
+    
+    private void closeConnection() {
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (IOException ex) {
+                System.err.println("#BluetoothConnection: Could not close StreamConnection.");
             }
         }
     }

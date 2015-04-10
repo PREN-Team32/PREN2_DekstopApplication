@@ -5,6 +5,9 @@
  */
 package ch.hslu.pren.t32.desktopapplication.view;
 
+import ch.hslu.pren.t32.desktopapplication.control.network.BluetoothConnection;
+import ch.hslu.pren.t32.desktopapplication.control.network.ConfigSender;
+import ch.hslu.pren.t32.desktopapplication.control.network.ValueReceiver;
 import ch.hslu.pren.t32.desktopapplication.control.*;
 import ch.hslu.pren.t32.model.ValueItem;
 import java.awt.Color;
@@ -18,6 +21,11 @@ import javax.swing.JOptionPane;
  * @author Niklaus
  */
 public class DesktopViewer extends javax.swing.JFrame {
+    private DesktopViewerEventHandler eventHandler;
+    private DesktopViewerControls control;
+    
+    private boolean bluetoothOnline = false;
+    private BluetoothConnection bluetoothConnection;
     private ValueReceiver receiver;
     private ConfigSender sender;
 
@@ -27,6 +35,7 @@ public class DesktopViewer extends javax.swing.JFrame {
     public DesktopViewer() {
         initComponents();
         loadBluetoothStatusIcon();
+        this.bluetoothConnection = BluetoothConnection.getInstance();
         this.receiver = new ValueReceiver();
         this.sender = new ConfigSender();
     }
@@ -116,6 +125,11 @@ public class DesktopViewer extends javax.swing.JFrame {
         });
 
         connectBluetooth.setText("Connect via Bluetooth");
+        connectBluetooth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectBluetoothActionPerformed(evt);
+            }
+        });
 
         testrun.setText("Testrun");
         testrun.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -192,7 +206,7 @@ public class DesktopViewer extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(connectBluetooth)
-                    .addComponent(connectionStatusIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(connectionStatusIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addGap(48, 48, 48)
                 .addComponent(testrun)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -278,37 +292,29 @@ public class DesktopViewer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void drawMainAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawMainAreaMouseClicked
-        ImageHandler.drawVerticalLine(receiver.getEditedImage(), receiver.getMainArea(), com.sun.prism.paint.Color.BLUE);
-        ImageIcon image = new ImageIcon(receiver.getEditedImage());
-        imageLabel.setIcon(image);
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
-        imageLabel.setText("");
-        imageLabel.repaint();
+        eventHandler.drawMainAreaMouseClicked(imageLabel);
     }//GEN-LAST:event_drawMainAreaMouseClicked
 
     private void luminanceSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_luminanceSliderStateChanged
-        float value = luminanceSlider.getValue();
-        value = value/100.00f;
-        luminanceThreshold.setText(value + " f");
+        eventHandler.luminanceSliderStateChanged(luminanceSlider, luminanceThreshold);
     }//GEN-LAST:event_luminanceSliderStateChanged
 
     private void drawShapeBorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawShapeBorderMouseClicked
-        ImageHandler.drawVerticalLine(receiver.getEditedImage(), receiver.getObjectBorder(), com.sun.prism.paint.Color.GREEN);
-        ImageIcon image = new ImageIcon(receiver.getEditedImage());
-        imageLabel.setIcon(image);
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
-        imageLabel.setText("");
-        imageLabel.repaint();
+        eventHandler.drawShapeBorderMouseClicked(imageLabel);
     }//GEN-LAST:event_drawShapeBorderMouseClicked
 
     private void testrunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_testrunMouseClicked
-        sender.setLuminanceThreshold(luminanceSlider.getValue());
-        sender.sendConfig();
+        eventHandler.testrunMouseClicked(luminanceSlider);
     }//GEN-LAST:event_testrunMouseClicked
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_startActionPerformed
+
+    private void connectBluetoothActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBluetoothActionPerformed
+        Thread connection = new Thread(bluetoothConnection);
+        connection.start();
+    }//GEN-LAST:event_connectBluetoothActionPerformed
         
     public void updateValues(ValueItem newValues) {
         JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
@@ -341,20 +347,7 @@ public class DesktopViewer extends javax.swing.JFrame {
     private void loadBluetoothStatusIcon() {
         ImageIcon statusIcon = new ImageIcon("res/redIcon.png");
         connectionStatusIcon.setIcon(statusIcon);
-        connectionStatusIcon.repaint();        
-    }
-    
-    private void initLookAndFeel() {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DesktopViewer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        connectionStatusIcon.repaint();
     }
     
     /**

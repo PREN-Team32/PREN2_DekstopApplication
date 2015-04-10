@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hslu.pren.t32.desktopapplication.control;
+package ch.hslu.pren.t32.desktopapplication.control.network;
 
 import ch.hslu.pren.t32.model.ConfigurationItem;
 import java.io.ByteArrayOutputStream;
@@ -17,6 +17,7 @@ import javax.microedition.io.StreamConnection;
  */
 public class ConfigSender {
     private ConfigurationItem config;
+    private StreamConnection mConnection;
     
     public ConfigSender() {
         this.config = ConfigurationItem.getInstance();
@@ -43,9 +44,6 @@ public class ConfigSender {
     }
     
     public void sendConfig() throws IOException {
-            
-        BluetoothConnection blue = new BluetoothConnection();        
-        StreamConnection mConnection = blue.getConnection();
         OutputStream os = mConnection.openOutputStream();
         
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

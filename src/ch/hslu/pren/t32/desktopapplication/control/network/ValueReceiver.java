@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hslu.pren.t32.desktopapplication.control;
+package ch.hslu.pren.t32.desktopapplication.control.network;
 
 import ch.hslu.pren.t32.model.*;
 import java.awt.image.BufferedImage;
