@@ -70,7 +70,7 @@ public class ValueReceiver {
             BufferedImage image = ImageIO.read(file);
             return image;
         } catch (IOException ex) {
-            System.err.println("Error in InputHandler: " + ex.getMessage());
+            System.err.println("#ValueReceiver: Error in InputHandler. " + ex.getMessage());
         }
         return null;
     }
@@ -86,7 +86,7 @@ public class ValueReceiver {
             image = ImageIO.read(bis);
             bis.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("#ValueReceiver: Error in Base64toImage()." + e.getMessage());
         }
         return image;
     }
