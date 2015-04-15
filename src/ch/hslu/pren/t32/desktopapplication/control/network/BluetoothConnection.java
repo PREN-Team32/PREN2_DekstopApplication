@@ -41,7 +41,16 @@ public class BluetoothConnection implements Runnable {
     
     public StreamConnection getConnection(){
         if(this.connection == null) {
-            run();
+            Thread t = new Thread(this);
+            t.start();
+        }
+        System.out.println("#BluetoothConnection: Freezing until connection established..");
+        while(this.connection == null) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                System.err.println("#BluetoothConnection: Waiting for connection was interrupted.");
+            }
         }
         return connection;
     }

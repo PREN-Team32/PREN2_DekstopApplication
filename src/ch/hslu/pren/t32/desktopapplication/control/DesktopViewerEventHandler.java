@@ -50,12 +50,12 @@ public class DesktopViewerEventHandler {
         sender.sendConfig();
     }
     
-    public void startActionPerformed() {                                      
+    public void startMouseClicked() {                                      
         sender.setStartSignal(true);
         sender.sendConfig();
     }
     
-    public void connectBluetoothActionPerformed() {
+    public void connectBluetoothMouseClicked() {
         if(sender == null) {
             this.sender = new ConfigSender(bluetoothConnection.getConnection());
             System.out.println("#DekstopViewer: BluetoothConnection established.");

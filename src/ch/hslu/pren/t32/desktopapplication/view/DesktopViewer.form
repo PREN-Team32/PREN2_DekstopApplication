@@ -266,7 +266,7 @@
             <Property name="text" type="java.lang.String" value="Connect via Bluetooth"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="connectBluetoothActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="connectBluetoothMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="testrun">
@@ -288,7 +288,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="startMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="connectionStatusIcon">

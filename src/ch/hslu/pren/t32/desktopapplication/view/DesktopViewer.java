@@ -29,6 +29,7 @@ public class DesktopViewer extends javax.swing.JFrame {
      * Creates new form DesktopViewer
      */
     public DesktopViewer() {
+        this.eventHandler = new DesktopViewerEventHandler();
         initComponents();
         loadBluetoothStatusIcon();
     }
@@ -118,9 +119,9 @@ public class DesktopViewer extends javax.swing.JFrame {
         });
 
         connectBluetooth.setText("Connect via Bluetooth");
-        connectBluetooth.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                connectBluetoothActionPerformed(evt);
+        connectBluetooth.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                connectBluetoothMouseClicked(evt);
             }
         });
 
@@ -134,9 +135,9 @@ public class DesktopViewer extends javax.swing.JFrame {
         start.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         start.setText("Start");
         start.setBorder(null);
-        start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startActionPerformed(evt);
+        start.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                startMouseClicked(evt);
             }
         });
 
@@ -306,16 +307,16 @@ public class DesktopViewer extends javax.swing.JFrame {
         eventHandler.testrunMouseClicked(luminanceSlider.getValue());
     }//GEN-LAST:event_testrunMouseClicked
 
-    private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-        eventHandler.startActionPerformed();
-    }//GEN-LAST:event_startActionPerformed
+    private void startMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseClicked
+        eventHandler.startMouseClicked();
+    }//GEN-LAST:event_startMouseClicked
 
-    private void connectBluetoothActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBluetoothActionPerformed
-        eventHandler.connectBluetoothActionPerformed();
+    private void connectBluetoothMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectBluetoothMouseClicked
+        eventHandler.connectBluetoothMouseClicked();
         ImageIcon statusIcon = new ImageIcon("res/greenIcon.png");
         connectionStatusIcon.setIcon(statusIcon);
         connectionStatusIcon.repaint();
-    }//GEN-LAST:event_connectBluetoothActionPerformed
+    }//GEN-LAST:event_connectBluetoothMouseClicked
         
 //    public void updateValues(ValueItem newValues) {
 //        JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
