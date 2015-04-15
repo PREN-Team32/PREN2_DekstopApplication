@@ -19,6 +19,7 @@ import javax.microedition.io.StreamConnection;
  * @author Niklaus
  */
 public class ConfigSender {
+    //Test
     private ConfigurationItem config;
     private StreamConnection mConnection;
     
