@@ -186,7 +186,8 @@
             <Property name="value" type="int" value="30"/>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="luminanceSliderStateChanged"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="luminanceSliderMouseReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="luminanceSliderKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField1">
@@ -248,6 +249,7 @@
         <Component class="javax.swing.JButton" name="drawMainArea">
           <Properties>
             <Property name="text" type="java.lang.String" value="Draw Line"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="drawMainAreaMouseClicked"/>
@@ -256,6 +258,7 @@
         <Component class="javax.swing.JButton" name="drawShapeBorder">
           <Properties>
             <Property name="text" type="java.lang.String" value="Draw Border"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="drawShapeBorderMouseClicked"/>

@@ -5,12 +5,15 @@
  */
 package ch.hslu.pren.t32.desktopapplication.control;
 
+import ch.hslu.pren.t32.model.ValueItem;
 import com.sun.prism.paint.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -61,5 +64,37 @@ public final class ImageHandler {
             image.setRGB(x+1, y, color.getIntArgbPre());
            }
         }
+    }
+    
+    public static BufferedImage getOriginalImage(ValueItem values) {
+        BufferedImage originalImage = Base64toImage(values.originalImage);
+        if(originalImage == null) {
+            System.out.println("OriginalImage could not be loaded.");
+        }
+        return originalImage;
+    }
+    
+    public static BufferedImage getEditedImage(ValueItem values) {
+        BufferedImage editedImage = Base64toImage(values.editedImage);
+        if(editedImage == null) {
+            System.out.println("EditedImage could not be loaded.");
+        }
+        return editedImage;
+    }
+    
+    //Added by Livio
+     private static BufferedImage Base64toImage(String imageString){
+          BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            System.err.println("#ValueReceiver: Error in Base64toImage()." + e.getMessage());
+        }
+        return image;
     }
 }

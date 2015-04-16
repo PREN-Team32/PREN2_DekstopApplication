@@ -1,0 +1,120 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ch.hslu.pren.t32.desktopapplication.control.network;
+
+import ch.hslu.pren.t32.desktopapplication.control.ViewerControls;
+import ch.hslu.pren.t32.desktopapplication.view.DesktopViewer;
+import ch.hslu.pren.t32.model.ValueItem;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Observable;
+import java.util.Observer;
+import javax.microedition.io.StreamConnection;
+
+/**
+ *
+ * @author Niklaus *
+ * Checks the BluetoothConnection for wheter new Values are incoming or not.
+ */
+public class ConnectionCheckerRunnable extends Observable implements Runnable {
+    private static ConnectionCheckerRunnable theInstance = null;
+    private ValueItem newValues;
+    
+    private StreamConnection mConnection;
+
+    
+    private ConnectionCheckerRunnable() {
+        super();   
+        newValues = ValueItem.getInstance();
+    }
+    
+    public static ConnectionCheckerRunnable getInstance() {
+        if(theInstance == null) {
+            theInstance = new ConnectionCheckerRunnable();
+        }
+        return theInstance;
+    }
+    
+    public void setConnection(StreamConnection mConnection) {
+        this.mConnection = mConnection;
+    }
+    
+    @Override
+    public void run() {
+        if(mConnection != null) {
+            while(true) {
+                boolean objectReceived = false;
+                //TODO: check for incoming objects on stream
+
+                if(mConnection != null) {
+                     try {
+                        byte[] bites = new byte[1000000];
+
+                        BufferedInputStream inputStream = new BufferedInputStream(mConnection.openDataInputStream());
+
+                         int bufferSize = bites.length;
+
+                        //WEiss nicht wieso aber liest beim ersten mal nur immer 990 bytes ein
+                        int byteNo = inputStream.read(bites);                       
+                        if (byteNo != -1) {             
+
+                        //Hier liest er die restlichen ein wenn das byte[] array nicht mehr als 1 Million datensätze enthält
+                        byteNo = inputStream.read(bites,byteNo,bufferSize);
+
+                        }             
+                        recieveByte(bites);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ConnectionCheckerRunnable.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else {
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException ex) {
+                        System.err.println(ex.getMessage());
+                    }
+                }
+            }
+        }
+    }
+    
+    public void recieveByte(byte[] myBytes) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(myBytes);
+        ObjectInput in = null;
+
+        try {
+            in = new ObjectInputStream(bis);
+            bis.close();
+            
+            newValues = (ValueItem) in.readObject();
+            notifyObservers(newValues);
+            
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bis.close();
+            } catch (IOException ex) {
+                System.out.println("Exception lautet: " + ex.getMessage());
+            }
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                System.out.println("ExceptionIO lautet: " + ex.getMessage());
+            }           
+        }
+    }
+    
+    
+
+}

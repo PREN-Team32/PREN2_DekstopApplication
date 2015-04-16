@@ -5,7 +5,7 @@
  */
 package ch.hslu.pren.t32.desktopapplication;
 
-import ch.hslu.pren.t32.desktopapplication.control.DesktopViewerEventHandler;
+import ch.hslu.pren.t32.desktopapplication.control.ViewerControls;
 import ch.hslu.pren.t32.desktopapplication.view.DesktopViewer;
 
 /**
@@ -20,8 +20,8 @@ public class Test {
     public static void main(String[] args) {
 //        DesktopViewer viewer = new DesktopViewer();
 //        viewer.setVisible(true);
-        DesktopViewerEventHandler test = new DesktopViewerEventHandler();
-        test.connectBluetoothMouseClicked();
+//        ViewerControls test = new ViewerControls();
+//        test.connectBluetoothMouseClicked();
     }
     
 }

@@ -6,6 +6,8 @@ package ch.hslu.pren.t32.desktopapplication;
  * and open the template in the editor.
  */
 
+import ch.hslu.pren.t32.desktopapplication.control.ViewerControls;
+import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
 import ch.hslu.pren.t32.desktopapplication.view.DesktopViewer;
 /**
  *
@@ -17,7 +19,12 @@ public class Main {
         /* Create and display the Viewer */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DesktopViewer().setVisible(true);
+                ConnectionCheckerRunnable connectionChecker = ConnectionCheckerRunnable.getInstance();
+                ViewerControls controls = new ViewerControls(connectionChecker);
+                DesktopViewer viewer = new DesktopViewer(controls);
+                connectionChecker.addObserver(viewer);
+                
+                viewer.setVisible(true);
             }
         });
     }
