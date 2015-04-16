@@ -5,9 +5,7 @@
  */
 package ch.hslu.pren.t32.desktopapplication.control.network;
 
-import ch.hslu.pren.t32.desktopapplication.control.ViewerControls;
-import ch.hslu.pren.t32.desktopapplication.view.DesktopViewer;
-import ch.hslu.pren.t32.model.ValueItem;
+import ch.hslu.pren.t32.desktopapplication.model.ValueItem;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -15,8 +13,6 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Observable;
-import java.util.Observer;
 import javax.microedition.io.StreamConnection;
 
 /**
@@ -24,7 +20,7 @@ import javax.microedition.io.StreamConnection;
  * @author Niklaus *
  * Checks the BluetoothConnection for wheter new Values are incoming or not.
  */
-public class ConnectionCheckerRunnable extends Observable implements Runnable {
+public class ConnectionCheckerRunnable implements Runnable {
     private static ConnectionCheckerRunnable theInstance = null;
     private ValueItem newValues;
     
@@ -94,9 +90,8 @@ public class ConnectionCheckerRunnable extends Observable implements Runnable {
             in = new ObjectInputStream(bis);
             bis.close();
             
-            newValues = (ValueItem) in.readObject();
-            notifyObservers(newValues);
-            
+            newValues.overrideValues((ValueItem) in.readObject());
+            System.out.println("#ConnectionCheckerRunnable: Successfully received new Values.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally {

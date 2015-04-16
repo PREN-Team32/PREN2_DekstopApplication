@@ -8,8 +8,6 @@ package ch.hslu.pren.t32.desktopapplication.control.network;
 
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.LocalDevice;
 import javax.bluetooth.UUID;

@@ -7,7 +7,7 @@ package ch.hslu.pren.t32.desktopapplication.view;
 
 import ch.hslu.pren.t32.desktopapplication.control.*;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
-import ch.hslu.pren.t32.model.ValueItem;
+import ch.hslu.pren.t32.desktopapplication.model.ValueItem;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * @author Niklaus
  */
 public class DesktopViewer extends javax.swing.JFrame implements Observer {
-    private ViewerControls eventHandler;
+    private ViewerControls control;
     private boolean bluetoothOnline = false;
     private ValueItem receivedValues;
 
@@ -30,7 +30,9 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
      * @param eventHandler
      */
     public DesktopViewer(ViewerControls eventHandler) {
-        this.eventHandler = eventHandler;
+        this.receivedValues = ValueItem.getInstance();
+        receivedValues.addObserver(this);
+        this.control = eventHandler;
         initComponents();
         loadBluetoothStatusIcon();
     }
@@ -294,51 +296,42 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void drawMainAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawMainAreaMouseClicked
-        eventHandler.drawMainAreaMouseClicked(imageLabel);
+        control.drawMainAreaMouseClicked(imageLabel);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
     }//GEN-LAST:event_drawMainAreaMouseClicked
 
     private void drawShapeBorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawShapeBorderMouseClicked
-        eventHandler.drawShapeBorderMouseClicked(imageLabel);
+        control.drawShapeBorderMouseClicked(imageLabel);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
     }//GEN-LAST:event_drawShapeBorderMouseClicked
 
     private void testrunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_testrunMouseClicked
-        eventHandler.testrunMouseClicked(luminanceSlider.getValue());        
+        control.testrunMouseClicked(luminanceSlider.getValue());        
     }//GEN-LAST:event_testrunMouseClicked
 
     private void startMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseClicked
-        eventHandler.startMouseClicked();
+        control.startMouseClicked();
     }//GEN-LAST:event_startMouseClicked
 
     private void connectBluetoothMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectBluetoothMouseClicked
-        eventHandler.connectBluetoothMouseClicked();
+        control.connectBluetoothMouseClicked();
         ImageIcon statusIcon = new ImageIcon("res/greenIcon.png");
         connectionStatusIcon.setIcon(statusIcon);
         connectionStatusIcon.repaint();
     }//GEN-LAST:event_connectBluetoothMouseClicked
 
     private void luminanceSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_luminanceSliderMouseReleased
-        eventHandler.luminanceSliderStateChanged(luminanceSlider, luminanceThreshold);
+        control.luminanceSliderStateChanged(luminanceSlider, luminanceThreshold);
     }//GEN-LAST:event_luminanceSliderMouseReleased
 
     private void luminanceSliderKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_luminanceSliderKeyReleased
-        eventHandler.luminanceSliderStateChanged(luminanceSlider, luminanceThreshold);
+        control.luminanceSliderStateChanged(luminanceSlider, luminanceThreshold);
     }//GEN-LAST:event_luminanceSliderKeyReleased
-      
-    
-    
-//    public void updateValues(ValueItem receivedValues) {
 
-//        
-//    }
-    
-    
-    
     private void loadImage(BufferedImage image){
         ImageIcon imageIco = new ImageIcon(image);
         imageLabel.setIcon(imageIco);
@@ -385,22 +378,19 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg.getClass().equals(ValueItem.class)) {
-            receivedValues = (ValueItem) arg;
-            JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
-            loadImage(ImageHandler.getEditedImage(receivedValues));
-            mainArea.setText(Integer.toString(receivedValues.mainArea));
-            totalTimeUsed.setText(Integer.toString(receivedValues.totalTimeUsed));
-            if(receivedValues.foundShape) {
-                wasFound.setText("true");
-                wasFound.selectAll();
-                wasFound.setForeground(Color.GREEN);
-            }
-            else {
-                wasFound.setText("false");
-                wasFound.selectAll();
-                wasFound.setForeground(Color.RED);
-            }
+        JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
+        loadImage(ImageHandler.getEditedImage(receivedValues));
+        mainArea.setText(Integer.toString(receivedValues.mainArea));
+        totalTimeUsed.setText(Integer.toString(receivedValues.totalTimeUsed));
+        if(receivedValues.foundShape) {
+            wasFound.setText("true");
+            wasFound.selectAll();
+            wasFound.setForeground(Color.GREEN);
+        }
+        else {
+            wasFound.setText("false");
+            wasFound.selectAll();
+            wasFound.setForeground(Color.RED);
         }
     }
 }

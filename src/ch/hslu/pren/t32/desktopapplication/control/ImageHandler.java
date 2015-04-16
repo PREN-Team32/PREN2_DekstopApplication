@@ -5,7 +5,7 @@
  */
 package ch.hslu.pren.t32.desktopapplication.control;
 
-import ch.hslu.pren.t32.model.ValueItem;
+import ch.hslu.pren.t32.desktopapplication.model.ValueItem;
 import com.sun.prism.paint.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

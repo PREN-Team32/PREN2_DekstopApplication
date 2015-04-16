@@ -8,11 +8,6 @@ package ch.hslu.pren.t32.desktopapplication.control;
 import ch.hslu.pren.t32.desktopapplication.control.network.BluetoothConnection;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConfigSender;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
-import ch.hslu.pren.t32.desktopapplication.control.network.ResultLogger;
-import ch.hslu.pren.t32.model.ValueItem;
-import java.util.Observable;
-import java.util.Observer;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -22,6 +17,7 @@ import javax.swing.JTextField;
  * @author Niklaus
  */
 public class ViewerControls {
+    private ResultLogger logger;
     private final BluetoothConnection bluetoothConnection;
     private ConnectionCheckerRunnable connectionChecker;
     private Thread connectionCheckerThread;
@@ -66,6 +62,7 @@ public class ViewerControls {
     }
 
     private void startConnectionChecking() {
+        connectionChecker.setConnection(bluetoothConnection.getConnection());
         if(connectionCheckerThread == null)
             connectionCheckerThread = new Thread(connectionChecker);
         if(!connectionCheckerThread.isAlive())
@@ -78,6 +75,4 @@ public class ViewerControls {
             System.out.println("#DekstopViewer: BluetoothConnection established.");
         }
     }
-
-
 }

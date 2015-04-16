@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hslu.pren.t32.model;
+package ch.hslu.pren.t32.desktopapplication.model;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Observable;
 
 /**
  *
  * Wrapperclass used to store and transmit the results of the object detector
  * @author Niklaus
  */
-public class ValueItem implements Serializable{
+public class ValueItem extends Observable implements Serializable{
     private static ValueItem singeltonInstance;
     
     //Needed for identifying the object over serialization
@@ -41,5 +42,11 @@ public class ValueItem implements Serializable{
             singeltonInstance = new ValueItem();
         }
         return singeltonInstance;
+    }
+    
+    public void overrideValues(ValueItem newValues) {
+        singeltonInstance = newValues;
+        setChanged();
+        notifyObservers();
     }
 }

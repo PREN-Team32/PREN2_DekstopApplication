@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hslu.pren.t32.model;
+package ch.hslu.pren.t32.desktopapplication.model;
 import java.io.Serializable;
+import java.util.Observable;
 
 
 /**
@@ -12,7 +13,7 @@ import java.io.Serializable;
  * Wrapperclass used to store and transmit the configuration details for the detector.
  * @author Nikk
  */
-public class ConfigurationItem implements Serializable {
+public class ConfigurationItem extends Observable implements  Serializable {
     private static ConfigurationItem singeltonInstance;
     
     //Struct-Values:
@@ -42,4 +43,11 @@ public class ConfigurationItem implements Serializable {
         }
         return singeltonInstance;
     }
+    
+    public void overrideConfig(ConfigurationItem newConfig) {
+        singeltonInstance = newConfig;
+        setChanged();
+        notifyObservers();
+    }
+        
 }  

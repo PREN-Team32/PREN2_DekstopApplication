@@ -5,13 +5,9 @@
  */
 package ch.hslu.pren.t32.desktopapplication.control.network;
 
-import ch.hslu.pren.t32.model.ConfigurationItem;
-import java.io.ByteArrayOutputStream;
+import ch.hslu.pren.t32.desktopapplication.model.ConfigurationItem;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.microedition.io.StreamConnection;
 
 /**
@@ -19,8 +15,7 @@ import javax.microedition.io.StreamConnection;
  * @author Niklaus
  */
 public class ConfigSender {
-    //Test
-    private ConfigurationItem config;
+    private final ConfigurationItem config;
     private StreamConnection mConnection;
     
     public ConfigSender(StreamConnection mConnection) {
