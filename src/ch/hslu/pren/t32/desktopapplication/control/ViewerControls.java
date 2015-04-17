@@ -49,16 +49,20 @@ public class ViewerControls {
 //        imageLabel.setIcon(image);        
     }
     
-    public void testrunMouseClicked(int luminanceThreshold) {                                     
-        sender.setLuminanceThreshold(luminanceThreshold);
-        sender.sendConfig();
-        startConnectionChecking();
+    public void testrunMouseClicked(int luminanceThreshold) {
+        if(sender != null) {
+            sender.setLuminanceThreshold(luminanceThreshold);
+            sender.sendConfig();
+            startConnectionChecking();
+        }
     }
     
-    public void startMouseClicked() {                                      
-        sender.setStartSignal(true);
-        sender.sendConfig();
-        startConnectionChecking();
+    public void startMouseClicked() {
+        if(sender != null) {
+            sender.setStartSignal(true);
+            sender.sendConfig();
+            startConnectionChecking();
+        }
     }
 
     private void startConnectionChecking() {
@@ -72,7 +76,12 @@ public class ViewerControls {
     public void connectBluetoothMouseClicked() {
         if(sender == null) {
             this.sender = new ConfigSender(bluetoothConnection.getConnection());
-            System.out.println("#DekstopViewer: BluetoothConnection established.");
+            System.out.println("#ViewerControls: BluetoothConnection established.");
         }
+    }
+    
+    public void closeOperations() {
+        System.out.println("#ViewerControls: Shutting down Bluetooth..");
+        bluetoothConnection.closeConnection();
     }
 }

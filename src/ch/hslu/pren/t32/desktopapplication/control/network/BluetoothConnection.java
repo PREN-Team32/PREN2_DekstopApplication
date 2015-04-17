@@ -68,7 +68,7 @@ public class BluetoothConnection implements Runnable {
             UUID uuid = new UUID("2ebee4ce0f154e619344e8cea59f59ec",false);
             
             
-            String url = "btspp://localhost:" + uuid.toString() + ";name=LIVIO-LAPTOP";
+            String url = "btspp://localhost:" + uuid.toString() + ";name=NIKK_LAPTOP";
             notifier = (StreamConnectionNotifier)Connector.open(url);
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class BluetoothConnection implements Runnable {
         }
     }
     
-    private void closeConnection() {
+    public void closeConnection() {
         if(connection != null) {
             try {
                 connection.close();
@@ -98,5 +98,4 @@ public class BluetoothConnection implements Runnable {
             }
         }
     }
-    
 }

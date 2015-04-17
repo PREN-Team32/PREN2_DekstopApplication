@@ -9,6 +9,8 @@ import ch.hslu.pren.t32.desktopapplication.control.*;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
 import ch.hslu.pren.t32.desktopapplication.model.ValueItem;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
@@ -35,7 +37,17 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         this.control = eventHandler;
         initComponents();
         loadBluetoothStatusIcon();
-    }
+        
+        this.addWindowListener(new WindowAdapter()
+        {
+        @Override
+        public void windowClosing(WindowEvent e)
+            {
+                control.closeOperations();
+                System.exit(0);
+            }
+        });
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,7 +81,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         imagePanel = new javax.swing.JPanel();
         imageLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         optionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
