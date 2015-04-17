@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
  *
  * @author Niklaus
  */
-public class ImageItem {
+public class ImageContainer {
     private BufferedImage editedImage;
     private BufferedImage originalImage;
     

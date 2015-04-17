@@ -6,8 +6,7 @@
 package ch.hslu.pren.t32.desktopapplication.view;
 
 import ch.hslu.pren.t32.desktopapplication.control.*;
-import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
-import ch.pren.model.ImageItem;
+import ch.pren.model.ImageContainer;
 import ch.pren.model.ValueItem;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
@@ -26,7 +25,7 @@ import javax.swing.JOptionPane;
 public class DesktopViewer extends javax.swing.JFrame implements Observer {
     private ViewerControls control;
     private final ValueItem receivedValues;
-    private ImageItem imageContainer = null;
+    private ImageContainer imageContainer = null;
 
     /**
      * Creates new form DesktopViewer
@@ -36,7 +35,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         this.receivedValues = ValueItem.getInstance();
         receivedValues.addObserver(this);
         this.control = eventHandler;
-        imageContainer = new ImageItem();
+        imageContainer = new ImageContainer();
         initComponents();
         loadBluetoothStatusIcon();
         
@@ -150,6 +149,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         });
 
         testrun.setText("Testrun");
+        testrun.setEnabled(false);
         testrun.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 testrunMouseClicked(evt);
@@ -159,6 +159,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         start.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         start.setText("Start");
         start.setBorder(null);
+        start.setEnabled(false);
         start.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 startMouseClicked(evt);
@@ -328,11 +329,15 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_drawShapeBorderMouseClicked
 
     private void testrunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_testrunMouseClicked
-        control.testrunMouseClicked(luminanceSlider.getValue());        
+        control.testrunMouseClicked(luminanceSlider.getValue());
+        drawMainArea.setEnabled(false);
+        drawShapeBorder.setEnabled(false);
     }//GEN-LAST:event_testrunMouseClicked
 
     private void startMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseClicked
         control.startMouseClicked();
+        drawMainArea.setEnabled(false);
+        drawShapeBorder.setEnabled(false);
     }//GEN-LAST:event_startMouseClicked
 
     private void connectBluetoothMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectBluetoothMouseClicked
@@ -340,6 +345,8 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         ImageIcon statusIcon = new ImageIcon("res/greenIcon.png");
         connectionStatusIcon.setIcon(statusIcon);
         connectionStatusIcon.repaint();
+        start.setEnabled(true);
+        testrun.setEnabled(true);
     }//GEN-LAST:event_connectBluetoothMouseClicked
 
     private void luminanceSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_luminanceSliderMouseReleased
@@ -411,5 +418,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
             wasFound.selectAll();
             wasFound.setForeground(Color.RED);
         }
+        drawMainArea.setEnabled(true);
+        drawShapeBorder.setEnabled(true);
     }
 }
