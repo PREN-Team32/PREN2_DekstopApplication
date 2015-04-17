@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hslu.pren.t32.desktopapplication.model;
+package ch.pren.model;
 
 import java.io.File;
 import java.io.Serializable;
@@ -45,7 +45,14 @@ public class ValueItem extends Observable implements Serializable{
     }
     
     public void overrideValues(ValueItem newValues) {
-        singeltonInstance = newValues;
+        
+        this.calculatedAngle = newValues.calculatedAngle;
+        this.editedImage = newValues.editedImage;
+        this.foundShape = newValues.foundShape;
+        this.mainArea = newValues.mainArea;
+        this.objectBorder = newValues.objectBorder;
+        this.originalImage = newValues.originalImage;
+        this.totalTimeUsed = newValues.totalTimeUsed;
         setChanged();
         notifyObservers();
     }

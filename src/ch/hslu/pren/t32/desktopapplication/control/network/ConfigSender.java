@@ -5,7 +5,7 @@
  */
 package ch.hslu.pren.t32.desktopapplication.control.network;
 
-import ch.hslu.pren.t32.desktopapplication.model.ConfigurationItem;
+import ch.pren.model.ConfigurationItem;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import javax.microedition.io.StreamConnection;
@@ -20,6 +20,7 @@ public class ConfigSender {
     
     public ConfigSender(StreamConnection mConnection) {
         this.config = ConfigurationItem.getInstance();
+        this.mConnection = mConnection;
     }
     
     public void setLuminanceThreshold(float threshold) {

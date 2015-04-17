@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hslu.pren.t32.desktopapplication.model;
+package ch.pren.model;
 import java.io.Serializable;
 import java.util.Observable;
 
@@ -48,6 +48,5 @@ public class ConfigurationItem extends Observable implements  Serializable {
         singeltonInstance = newConfig;
         setChanged();
         notifyObservers();
-    }
-        
+    }        
 }  

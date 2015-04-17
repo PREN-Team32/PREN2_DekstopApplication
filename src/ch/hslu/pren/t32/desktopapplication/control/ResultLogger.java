@@ -5,8 +5,8 @@
  */
 package ch.hslu.pren.t32.desktopapplication.control;
 
-import ch.hslu.pren.t32.desktopapplication.model.ValueItem;
-import ch.hslu.pren.t32.desktopapplication.model.ConfigurationItem;
+import ch.pren.model.ValueItem;
+import ch.pren.model.ConfigurationItem;
 import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;

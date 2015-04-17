@@ -5,9 +5,10 @@
  */
 package ch.hslu.pren.t32.desktopapplication.control.network;
 
-import ch.hslu.pren.t32.desktopapplication.model.ValueItem;
+import ch.pren.model.ValueItem;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
@@ -46,15 +47,22 @@ public class ConnectionCheckerRunnable implements Runnable {
     @Override
     public void run() {
         if(mConnection != null) {
+            DataInputStream dis = null;
+            try {
+               dis = mConnection.openDataInputStream();
+            } catch (IOException ex) {
+                Logger.getLogger(ConnectionCheckerRunnable.class.getName()).log(Level.SEVERE, null, ex);
+            }
             while(true) {
                 boolean objectReceived = false;
                 //TODO: check for incoming objects on stream
-
+                
                 if(mConnection != null) {
                      try {
                         byte[] bites = new byte[1000000];
 
-                        BufferedInputStream inputStream = new BufferedInputStream(mConnection.openDataInputStream());
+                        BufferedInputStream inputStream = new BufferedInputStream(dis);
+                        
 
                          int bufferSize = bites.length;
 
@@ -63,13 +71,19 @@ public class ConnectionCheckerRunnable implements Runnable {
                         if (byteNo != -1) {             
 
                         //Hier liest er die restlichen ein wenn das byte[] array nicht mehr als 1 Million datensätze enthält
-                        byteNo = inputStream.read(bites,byteNo,bufferSize);
-
+                        byteNo = inputStream.read(bites,byteNo,bufferSize-byteNo);
+                            
                         }             
                         recieveByte(bites);
+                        dis.reset();
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(ConnectionCheckerRunnable.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                     finally{
+                         try{                         
+                         }catch(Exception ex){ex.printStackTrace();}
+                     }
                 }
                 else {
                     try {
@@ -90,7 +104,10 @@ public class ConnectionCheckerRunnable implements Runnable {
             in = new ObjectInputStream(bis);
             bis.close();
             
-            newValues.overrideValues((ValueItem) in.readObject());
+            ValueItem val = ValueItem.getInstance();
+            val = (ValueItem) in.readObject();
+            
+            newValues.overrideValues(val);
             System.out.println("#ConnectionCheckerRunnable: Successfully received new Values.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

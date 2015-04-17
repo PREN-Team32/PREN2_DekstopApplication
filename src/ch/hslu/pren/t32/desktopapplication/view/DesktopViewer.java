@@ -7,8 +7,8 @@ package ch.hslu.pren.t32.desktopapplication.view;
 
 import ch.hslu.pren.t32.desktopapplication.control.*;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
-import ch.hslu.pren.t32.desktopapplication.model.ImageItem;
-import ch.hslu.pren.t32.desktopapplication.model.ValueItem;
+import ch.pren.model.ImageItem;
+import ch.pren.model.ValueItem;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
 public class DesktopViewer extends javax.swing.JFrame implements Observer {
     private ViewerControls control;
     private final ValueItem receivedValues;
-    private final ImageItem imageContainer = null;
+    private ImageItem imageContainer = null;
 
     /**
      * Creates new form DesktopViewer
@@ -36,6 +36,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         this.receivedValues = ValueItem.getInstance();
         receivedValues.addObserver(this);
         this.control = eventHandler;
+        imageContainer = new ImageItem();
         initComponents();
         loadBluetoothStatusIcon();
         
