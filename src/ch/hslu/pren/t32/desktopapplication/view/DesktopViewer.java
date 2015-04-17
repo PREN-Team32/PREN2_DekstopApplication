@@ -7,6 +7,7 @@ package ch.hslu.pren.t32.desktopapplication.view;
 
 import ch.hslu.pren.t32.desktopapplication.control.*;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
+import ch.hslu.pren.t32.desktopapplication.model.ImageItem;
 import ch.hslu.pren.t32.desktopapplication.model.ValueItem;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
@@ -24,8 +25,8 @@ import javax.swing.JOptionPane;
  */
 public class DesktopViewer extends javax.swing.JFrame implements Observer {
     private ViewerControls control;
-    private boolean bluetoothOnline = false;
-    private ValueItem receivedValues;
+    private final ValueItem receivedValues;
+    private final ImageItem imageContainer = null;
 
     /**
      * Creates new form DesktopViewer
@@ -308,14 +309,18 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void drawMainAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawMainAreaMouseClicked
-        control.drawMainAreaMouseClicked(imageLabel);
+        ImageHandler.drawVerticalLine(imageContainer.getEditedImage(), receivedValues.mainArea, com.sun.prism.paint.Color.BLUE);
+        ImageIcon image = new ImageIcon(imageContainer.getEditedImage());
+        imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
     }//GEN-LAST:event_drawMainAreaMouseClicked
 
     private void drawShapeBorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawShapeBorderMouseClicked
-        control.drawShapeBorderMouseClicked(imageLabel);
+        ImageHandler.drawVerticalLine(imageContainer.getEditedImage(), receivedValues.objectBorder, com.sun.prism.paint.Color.GREEN);
+        ImageIcon image = new ImageIcon(imageContainer.getEditedImage());
+        imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
@@ -391,7 +396,8 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
-        loadImage(ImageHandler.getEditedImage(receivedValues));
+        imageContainer.retrieveImages(receivedValues);
+        loadImage(imageContainer.getEditedImage());
         mainArea.setText(Integer.toString(receivedValues.mainArea));
         totalTimeUsed.setText(Integer.toString(receivedValues.totalTimeUsed));
         if(receivedValues.foundShape) {

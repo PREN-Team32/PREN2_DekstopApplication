@@ -69,7 +69,7 @@ public final class ImageHandler {
     public static BufferedImage getOriginalImage(ValueItem values) {
         BufferedImage originalImage = Base64toImage(values.originalImage);
         if(originalImage == null) {
-            System.out.println("OriginalImage could not be loaded.");
+            System.out.println("#ImageHandler: OriginalImage could not be loaded.");
         }
         return originalImage;
     }
@@ -77,7 +77,7 @@ public final class ImageHandler {
     public static BufferedImage getEditedImage(ValueItem values) {
         BufferedImage editedImage = Base64toImage(values.editedImage);
         if(editedImage == null) {
-            System.out.println("EditedImage could not be loaded.");
+            System.out.println("#ImageHandler: EditedImage could not be loaded.");
         }
         return editedImage;
     }
@@ -93,7 +93,7 @@ public final class ImageHandler {
             image = ImageIO.read(bis);
             bis.close();
         } catch (Exception e) {
-            System.err.println("#ValueReceiver: Error in Base64toImage()." + e.getMessage());
+            System.err.println("#ImageHandler: Error in Base64toImage()." + e.getMessage());
         }
         return image;
     }
