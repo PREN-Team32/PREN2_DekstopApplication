@@ -43,6 +43,10 @@ public class ConfigSender {
         config.startSignal = signal;
     }
     
+    public void setPixelToCm(double pixelToCm) {
+        config.pixelToCm = pixelToCm;
+    }
+    
     public void sendConfig() {
         ObjectOutputStream os;
         try {

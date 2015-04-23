@@ -36,16 +36,25 @@ public class ViewerControls {
         luminanceThreshold.setText(value + " f");
     }
     
-    public void testrunMouseClicked(int luminanceThreshold) {
+    public void testrunMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) {
         if(sender != null) {
             sender.setLuminanceThreshold(luminanceThreshold);
+            sender.setPixelToCm(Double.parseDouble(pixelToCm));
+            sender.setVisitedPixels(Integer.parseInt(visitedPixels));
+            sender.setWidthToObserve(Integer.parseInt(width));
+            sender.setHeightToObserve(Integer.parseInt(height));
             sender.sendConfig();
             startConnectionChecking();
         }
     }
     
-    public void startMouseClicked() {
+    public void startMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) {
         if(sender != null) {
+            sender.setLuminanceThreshold(luminanceThreshold);
+            sender.setPixelToCm(Double.parseDouble(pixelToCm));
+            sender.setVisitedPixels(Integer.parseInt(visitedPixels));
+            sender.setWidthToObserve(Integer.parseInt(width));
+            sender.setHeightToObserve(Integer.parseInt(height));
             sender.setStartSignal(true);
             sender.sendConfig();
             startConnectionChecking();
