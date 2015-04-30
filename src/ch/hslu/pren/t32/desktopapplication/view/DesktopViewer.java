@@ -12,8 +12,11 @@ import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,17 +40,6 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         this.control = eventHandler;
         imageContainer = new ImageContainer();
         initComponents();
-        loadBluetoothStatusIcon();
-        
-        this.addWindowListener(new WindowAdapter()
-        {
-        @Override
-        public void windowClosing(WindowEvent e)
-            {
-                control.closeOperations();
-                System.exit(0);
-            }
-        });
         }
 
     /**
@@ -72,10 +64,8 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         jSeparator1 = new javax.swing.JSeparator();
         drawMainArea = new javax.swing.JButton();
         drawShapeBorder = new javax.swing.JButton();
-        connectBluetooth = new javax.swing.JButton();
         testrun = new javax.swing.JButton();
         start = new javax.swing.JButton();
-        connectionStatusIcon = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jTextField2 = new javax.swing.JTextField();
         pixelToCm = new javax.swing.JTextField();
@@ -93,7 +83,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         imagePanel = new javax.swing.JPanel();
         imageLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         optionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -152,15 +142,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
             }
         });
 
-        connectBluetooth.setText("Connect via Bluetooth");
-        connectBluetooth.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                connectBluetoothMouseClicked(evt);
-            }
-        });
-
         testrun.setText("Testrun");
-        testrun.setEnabled(false);
         testrun.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 testrunMouseClicked(evt);
@@ -170,15 +152,11 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         start.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         start.setText("Start");
         start.setBorder(null);
-        start.setEnabled(false);
         start.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 startMouseClicked(evt);
             }
         });
-
-        connectionStatusIcon.setMaximumSize(new java.awt.Dimension(25, 25));
-        connectionStatusIcon.setMinimumSize(new java.awt.Dimension(25, 25));
 
         jTextField2.setEditable(false);
         jTextField2.setText("  Calculation Factor Px/cm:");
@@ -221,10 +199,6 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
             .addGroup(optionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(optionsPanelLayout.createSequentialGroup()
-                        .addComponent(connectBluetooth, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(connectionStatusIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createSequentialGroup()
                         .addComponent(testrun, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -262,6 +236,11 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(wasFound, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(optionsPanelLayout.createSequentialGroup()
+                        .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,12 +250,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(mainArea)
                                 .addComponent(drawMainArea, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(drawShapeBorder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(optionsPanelLayout.createSequentialGroup()
-                        .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(drawShapeBorder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
             .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
@@ -286,11 +260,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         optionsPanelLayout.setVerticalGroup(
             optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(connectionStatusIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(connectBluetooth, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addGap(27, 27, 27)
+                .addGap(63, 63, 63)
                 .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(testrun))
@@ -414,25 +384,24 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_drawShapeBorderMouseClicked
 
     private void testrunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_testrunMouseClicked
-        control.testrunMouseClicked(luminanceSlider.getValue(), pixelToCm.getText(), visitedPixels.getSelectedItem().toString(), widhtToObserve.getText(), heightToObserve.getText());
+        try {
+            control.testrunMouseClicked(luminanceSlider.getValue(), pixelToCm.getText(), visitedPixels.getSelectedItem().toString(), widhtToObserve.getText(), heightToObserve.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(DesktopViewer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         drawMainArea.setEnabled(false);
         drawShapeBorder.setEnabled(false);
     }//GEN-LAST:event_testrunMouseClicked
 
     private void startMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseClicked
-        control.startMouseClicked(luminanceSlider.getValue(), pixelToCm.getText(), visitedPixels.getSelectedItem().toString(), widhtToObserve.getText(), heightToObserve.getText());
+        try {
+            control.startMouseClicked(luminanceSlider.getValue(), pixelToCm.getText(), visitedPixels.getSelectedItem().toString(), widhtToObserve.getText(), heightToObserve.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(DesktopViewer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         drawMainArea.setEnabled(false);
         drawShapeBorder.setEnabled(false);
     }//GEN-LAST:event_startMouseClicked
-
-    private void connectBluetoothMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectBluetoothMouseClicked
-        control.connectBluetoothMouseClicked();
-        ImageIcon statusIcon = new ImageIcon("res/greenIcon.png");
-        connectionStatusIcon.setIcon(statusIcon);
-        connectionStatusIcon.repaint();
-        start.setEnabled(true);
-        testrun.setEnabled(true);
-    }//GEN-LAST:event_connectBluetoothMouseClicked
 
     private void luminanceSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_luminanceSliderMouseReleased
         control.luminanceSliderStateChanged(luminanceSlider, luminanceThreshold);
@@ -451,20 +420,12 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         imagePanel.repaint();
     }
     
-    private void loadBluetoothStatusIcon() {
-        ImageIcon statusIcon = new ImageIcon("res/redIcon.png");
-        connectionStatusIcon.setIcon(statusIcon);
-        connectionStatusIcon.repaint();
-    }
-    
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField calculatedAngle;
-    private javax.swing.JButton connectBluetooth;
-    private javax.swing.JLabel connectionStatusIcon;
     private javax.swing.JButton drawMainArea;
     private javax.swing.JButton drawShapeBorder;
     private javax.swing.JTextField heightToObserve;
@@ -485,7 +446,6 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JSlider luminanceSlider;
-    private javax.swing.JSlider luminanceSlider1;
     private javax.swing.JTextField luminanceThreshold;
     private javax.swing.JTextField mainArea;
     private javax.swing.JPanel optionsPanel;

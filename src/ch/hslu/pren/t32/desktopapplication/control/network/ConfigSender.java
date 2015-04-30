@@ -8,7 +8,10 @@ package ch.hslu.pren.t32.desktopapplication.control.network;
 import ch.pren.model.ConfigurationItem;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import javax.microedition.io.StreamConnection;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,11 +19,15 @@ import javax.microedition.io.StreamConnection;
  */
 public class ConfigSender {
     private final ConfigurationItem config;
-    private StreamConnection mConnection;
+    ServerSocket serverSocket;
     
-    public ConfigSender(StreamConnection mConnection) {
+    public ConfigSender() {
         this.config = ConfigurationItem.getInstance();
-        this.mConnection = mConnection;
+        try {
+            serverSocket = new ServerSocket(11111);
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void setLuminanceThreshold(float threshold) {
@@ -47,15 +54,18 @@ public class ConfigSender {
         config.pixelToCm = pixelToCm;
     }
     
-    public void sendConfig() {
-        ObjectOutputStream os;
-        try {
-            os = new ObjectOutputStream(mConnection.openOutputStream());
-            os.writeObject(config);
-            os.flush();
-            os.close();
-        } catch (IOException ex) {
-            System.err.println("#ConfigSender: Could not open ByteArrayOutputstream in sendConfig().");
+    public void sendConfig() throws IOException{
+        if(serverSocket.isClosed()) {
+            this.serverSocket = new ServerSocket(11111);
         }
+        Socket pipe = serverSocket.accept();
+        
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(pipe.getOutputStream());
+        
+        objectOutputStream.writeObject(config);
+        
+        pipe.close();
+        serverSocket.close();
+        System.out.println("#ConfigSender: Config was successfully sent.");
     }
 }

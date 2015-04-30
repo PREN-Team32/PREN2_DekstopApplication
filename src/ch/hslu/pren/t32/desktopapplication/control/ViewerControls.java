@@ -5,9 +5,9 @@
  */
 package ch.hslu.pren.t32.desktopapplication.control;
 
-import ch.hslu.pren.t32.desktopapplication.control.network.BluetoothConnection;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConfigSender;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
+import java.io.IOException;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
@@ -17,16 +17,12 @@ import javax.swing.JTextField;
  */
 public class ViewerControls {
     private ResultLogger logger;
-    private final BluetoothConnection bluetoothConnection;
     private final ConnectionCheckerRunnable connectionChecker;
     private Thread connectionCheckerThread;
-    private ResultLogger receiver;
-    private ConfigSender sender = null;
+    private ConfigSender sender = new ConfigSender();
     
     public ViewerControls(ConnectionCheckerRunnable connectionChecker) {
         this.connectionChecker = connectionChecker;
-        this.bluetoothConnection = BluetoothConnection.getInstance();
-        this.receiver = new ResultLogger();
     }
     
     public void luminanceSliderStateChanged(JSlider luminanceSlider, JTextField luminanceThreshold) {                                             
@@ -36,7 +32,7 @@ public class ViewerControls {
         luminanceThreshold.setText(value + " f");
     }
     
-    public void testrunMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) {
+    public void testrunMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) throws IOException{
         if(sender != null) {
             sender.setLuminanceThreshold(luminanceThreshold);
             sender.setPixelToCm(Double.parseDouble(pixelToCm));
@@ -48,7 +44,7 @@ public class ViewerControls {
         }
     }
     
-    public void startMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) {
+    public void startMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) throws IOException{
         if(sender != null) {
             sender.setLuminanceThreshold(luminanceThreshold);
             sender.setPixelToCm(Double.parseDouble(pixelToCm));
@@ -62,22 +58,9 @@ public class ViewerControls {
     }
 
     private void startConnectionChecking() {
-        connectionChecker.setConnection(bluetoothConnection.getConnection());
         if(connectionCheckerThread == null)
             connectionCheckerThread = new Thread(connectionChecker);
         if(!connectionCheckerThread.isAlive())
             connectionCheckerThread.start();
-    }
-    
-    public void connectBluetoothMouseClicked() {
-        if(sender == null) {
-            this.sender = new ConfigSender(bluetoothConnection.getConnection());
-            System.out.println("#ViewerControls: BluetoothConnection established.");
-        }
-    }
-    
-    public void closeOperations() {
-        System.out.println("#ViewerControls: Shutting down Bluetooth..");
-        bluetoothConnection.closeConnection();
     }
 }
