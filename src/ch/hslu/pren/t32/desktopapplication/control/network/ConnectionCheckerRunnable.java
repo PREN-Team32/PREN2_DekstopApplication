@@ -8,7 +8,6 @@ package ch.hslu.pren.t32.desktopapplication.control.network;
 import ch.pren.model.ValueItem;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -19,6 +18,7 @@ import java.net.Socket;
 public class ConnectionCheckerRunnable implements Runnable {
     private static ConnectionCheckerRunnable theInstance = null;
     private ValueItem newValues;
+    private String hostIP;
 
     
     private ConnectionCheckerRunnable() {
@@ -32,20 +32,24 @@ public class ConnectionCheckerRunnable implements Runnable {
         }
         return theInstance;
     }
+
+    public void setHostIP(String hostIP) {
+        this.hostIP = hostIP;
+    }    
     
     @Override
     public void run() {
         try {
             while(true) {
-                ServerSocket serverSocket = new ServerSocket(11111);
-                Socket pipe = serverSocket.accept();
+                System.out.println("#ConnectionChecker: Starting to check for incoming ValueItems.");
+                Socket clientSocket = new Socket(hostIP, 11111);
 
-                ObjectInputStream ois = new ObjectInputStream(pipe.getInputStream());
+                ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
                 ValueItem tmp = (ValueItem) ois.readObject();
+                System.out.println("#ConnectionChecker: New Values received.");
                 newValues.overrideValues(tmp);
 
-                pipe.close();
-                serverSocket.close();
+                clientSocket.close();
             }
         }
         catch(ClassNotFoundException | IOException ex) {

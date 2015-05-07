@@ -8,6 +8,7 @@ package ch.hslu.pren.t32.desktopapplication.control;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConfigSender;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
@@ -46,6 +47,9 @@ public class ViewerControls {
             sender.sendConfig();
             startConnectionChecking();
         }
+        else {
+            JOptionPane.showMessageDialog(null, "Bitte stellen Sie erst die Verbindung her.");
+        }
     }
     
     public void startMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) throws IOException{
@@ -59,10 +63,16 @@ public class ViewerControls {
             sender.sendConfig();
             startConnectionChecking();
         }
+        else {
+            JOptionPane.showMessageDialog(null, "Bitte stellen Sie erst die Verbindung her.");
+        }
     }
 
     private void startConnectionChecking() {
-        if(connectionCheckerThread == null)
+        if(connectionCheckerThread == null){
+            connectionChecker.setHostIP(sender.getHostIP());
             connectionCheckerThread = new Thread(connectionChecker);
+            connectionCheckerThread.start();
+        }
     }
 }

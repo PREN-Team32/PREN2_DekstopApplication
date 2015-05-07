@@ -26,10 +26,16 @@ public class ConfigSender {
         this.hostIP = host;
         try {
             clientSocket = new Socket(hostIP, 11111);
+            System.out.println("#ConfigSender: Connection succeeded.");
         } catch (IOException ex) {
             Logger.getLogger(ConfigSender.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public String getHostIP() {
+        return hostIP;
+    }
+    
     
     public void setLuminanceThreshold(float threshold) {
         config.luminanceThreshold = threshold;
