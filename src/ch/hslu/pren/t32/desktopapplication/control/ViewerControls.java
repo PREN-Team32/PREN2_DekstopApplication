@@ -19,7 +19,7 @@ public class ViewerControls {
     private ResultLogger logger;
     private final ConnectionCheckerRunnable connectionChecker;
     private Thread connectionCheckerThread;
-    private ConfigSender sender = new ConfigSender();
+    private ConfigSender sender;
     
     public ViewerControls(ConnectionCheckerRunnable connectionChecker) {
         this.connectionChecker = connectionChecker;
@@ -32,9 +32,13 @@ public class ViewerControls {
         luminanceThreshold.setText(value + " f");
     }
     
+    public void connectMouseClicked(String ipAddress) {
+        this.sender = new ConfigSender(ipAddress);
+    }
+    
     public void testrunMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) throws IOException{
         if(sender != null) {
-            sender.setLuminanceThreshold(luminanceThreshold);
+            sender.setLuminanceThreshold(luminanceThreshold/100f);
             sender.setPixelToCm(Double.parseDouble(pixelToCm));
             sender.setVisitedPixels(Integer.parseInt(visitedPixels));
             sender.setWidthToObserve(Integer.parseInt(width));
@@ -60,7 +64,5 @@ public class ViewerControls {
     private void startConnectionChecking() {
         if(connectionCheckerThread == null)
             connectionCheckerThread = new Thread(connectionChecker);
-        if(!connectionCheckerThread.isAlive())
-            connectionCheckerThread.start();
     }
 }

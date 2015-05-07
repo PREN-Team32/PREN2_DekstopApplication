@@ -36,15 +36,17 @@ public class ConnectionCheckerRunnable implements Runnable {
     @Override
     public void run() {
         try {
-            ServerSocket serverSocket = new ServerSocket(11111);
-            Socket pipe = serverSocket.accept();
+            while(true) {
+                ServerSocket serverSocket = new ServerSocket(11111);
+                Socket pipe = serverSocket.accept();
 
-            ObjectInputStream ois = new ObjectInputStream(pipe.getInputStream());
-            ValueItem tmp = (ValueItem) ois.readObject();
-            newValues.overrideValues(tmp);
-            
-            pipe.close();
-            serverSocket.close();
+                ObjectInputStream ois = new ObjectInputStream(pipe.getInputStream());
+                ValueItem tmp = (ValueItem) ois.readObject();
+                newValues.overrideValues(tmp);
+
+                pipe.close();
+                serverSocket.close();
+            }
         }
         catch(ClassNotFoundException | IOException ex) {
             ex.printStackTrace();

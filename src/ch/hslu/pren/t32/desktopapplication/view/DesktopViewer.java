@@ -9,8 +9,6 @@ import ch.hslu.pren.t32.desktopapplication.control.*;
 import ch.pren.model.ImageContainer;
 import ch.pren.model.ValueItem;
 import java.awt.Color;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Observable;
@@ -80,6 +78,8 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         jTextField9 = new javax.swing.JTextField();
         calculatedAngle = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
+        ipAddress = new javax.swing.JTextField();
+        connect = new javax.swing.JButton();
         imagePanel = new javax.swing.JPanel();
         imageLabel = new javax.swing.JLabel();
 
@@ -191,6 +191,15 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
 
         calculatedAngle.setEditable(false);
 
+        ipAddress.setText("Bitte IP Adresse eingeben");
+
+        connect.setText("Connect");
+        connect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                connectMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
         optionsPanelLayout.setHorizontalGroup(
@@ -199,11 +208,6 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
             .addGroup(optionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createSequentialGroup()
-                        .addComponent(testrun, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -250,7 +254,18 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(mainArea)
                                 .addComponent(drawMainArea, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(drawShapeBorder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(drawShapeBorder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createSequentialGroup()
+                        .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(testrun, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(optionsPanelLayout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(ipAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(start, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                            .addComponent(connect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(21, 21, 21)))
                 .addContainerGap())
             .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
@@ -260,7 +275,11 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         optionsPanelLayout.setVerticalGroup(
             optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsPanelLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
+                .addContainerGap()
+                .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ipAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(connect))
+                .addGap(30, 30, 30)
                 .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(testrun))
@@ -411,6 +430,10 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         control.luminanceSliderStateChanged(luminanceSlider, luminanceThreshold);
     }//GEN-LAST:event_luminanceSliderKeyReleased
 
+    private void connectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectMouseClicked
+        control.connectMouseClicked(ipAddress.getText());
+    }//GEN-LAST:event_connectMouseClicked
+
     private void loadImage(BufferedImage image){
         ImageIcon imageIco = new ImageIcon(image);
         imageLabel.setIcon(imageIco);
@@ -426,11 +449,13 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField calculatedAngle;
+    private javax.swing.JButton connect;
     private javax.swing.JButton drawMainArea;
     private javax.swing.JButton drawShapeBorder;
     private javax.swing.JTextField heightToObserve;
     private javax.swing.JLabel imageLabel;
     private javax.swing.JPanel imagePanel;
+    private javax.swing.JTextField ipAddress;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -462,7 +487,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
         JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
         imageContainer.retrieveImages(receivedValues);
-        loadImage(imageContainer.getEditedImage());
+        loadImage(imageContainer.getOriginalImage());
         mainArea.setText(Integer.toString(receivedValues.mainArea));
         totalTimeUsed.setText(Integer.toString(receivedValues.totalTimeUsed));
         calculatedAngle.setText(Double.toString(receivedValues.calculatedAngle));

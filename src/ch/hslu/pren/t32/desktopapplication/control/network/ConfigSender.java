@@ -8,7 +8,6 @@ package ch.hslu.pren.t32.desktopapplication.control.network;
 import ch.pren.model.ConfigurationItem;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,12 +18,14 @@ import java.util.logging.Logger;
  */
 public class ConfigSender {
     private final ConfigurationItem config;
-    ServerSocket serverSocket;
+    private String hostIP;
+    Socket clientSocket;
     
-    public ConfigSender() {
+    public ConfigSender(String host) {
         this.config = ConfigurationItem.getInstance();
+        this.hostIP = host;
         try {
-            serverSocket = new ServerSocket(11111);
+            clientSocket = new Socket(hostIP, 11111);
         } catch (IOException ex) {
             Logger.getLogger(ConfigSender.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,17 +56,15 @@ public class ConfigSender {
     }
     
     public void sendConfig() throws IOException{
-        if(serverSocket.isClosed()) {
-            this.serverSocket = new ServerSocket(11111);
+        if(clientSocket.isClosed()) {
+            this.clientSocket = new Socket(hostIP, 11111);
         }
-        Socket pipe = serverSocket.accept();
         
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(pipe.getOutputStream());
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         
         objectOutputStream.writeObject(config);
         
-        pipe.close();
-        serverSocket.close();
+        clientSocket.close();
         System.out.println("#ConfigSender: Config was successfully sent.");
     }
 }
