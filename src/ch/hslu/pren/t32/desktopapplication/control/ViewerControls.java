@@ -8,6 +8,8 @@ package ch.hslu.pren.t32.desktopapplication.control;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConfigSender;
 import ch.hslu.pren.t32.desktopapplication.control.network.ConnectionCheckerRunnable;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
