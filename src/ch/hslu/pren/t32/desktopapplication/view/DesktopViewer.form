@@ -350,7 +350,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="pixelToCm">
           <Properties>
-            <Property name="text" type="java.lang.String" value="0.07463"/>
+            <Property name="text" type="java.lang.String" value="0.1272"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -382,18 +382,18 @@
         <Component class="javax.swing.JTextField" name="jTextField5">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="  Width x Height to observe:"/>
+            <Property name="text" type="java.lang.String" value="  Border Left / Border Top:"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="widhtToObserve">
           <Properties>
-            <Property name="text" type="java.lang.String" value="488"/>
+            <Property name="text" type="java.lang.String" value="140"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="heightToObserve">
           <Properties>
-            <Property name="text" type="java.lang.String" value="500"/>
+            <Property name="text" type="java.lang.String" value="250"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

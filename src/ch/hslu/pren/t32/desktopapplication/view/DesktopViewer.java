@@ -162,7 +162,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         jTextField2.setText("  Calculation Factor Px/cm:");
         jTextField2.setEnabled(false);
 
-        pixelToCm.setText("0.07463");
+        pixelToCm.setText("0.1272");
 
         jLabel1.setText("Configuration");
 
@@ -174,12 +174,12 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         visitedPixels.setSelectedIndex(1);
 
         jTextField5.setEditable(false);
-        jTextField5.setText("  Width x Height to observe:");
+        jTextField5.setText("  Border Left / Border Top:");
         jTextField5.setEnabled(false);
 
-        widhtToObserve.setText("488");
+        widhtToObserve.setText("140");
 
-        heightToObserve.setText("500");
+        heightToObserve.setText("250");
 
         jLabel2.setText("x");
 
@@ -437,6 +437,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     private void loadImage(BufferedImage image){
         ImageIcon imageIco = new ImageIcon(image);
         imageLabel.setIcon(imageIco);
+        imageLabel.setSize(500, 400);
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setText("");
         imageLabel.repaint();
@@ -487,7 +488,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
         JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
         imageContainer.retrieveImages(receivedValues);
-        loadImage(imageContainer.getOriginalImage());
+        loadImage(imageContainer.getEditedImage());
         mainArea.setText(Integer.toString(receivedValues.mainArea));
         totalTimeUsed.setText(Integer.toString(receivedValues.totalTimeUsed));
         calculatedAngle.setText(Double.toString(receivedValues.calculatedAngle));

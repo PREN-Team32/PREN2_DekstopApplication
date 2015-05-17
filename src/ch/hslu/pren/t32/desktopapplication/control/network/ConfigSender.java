@@ -69,8 +69,11 @@ public class ConfigSender {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         
         objectOutputStream.writeObject(config);
+        objectOutputStream.flush();
+        objectOutputStream.close();
         
         clientSocket.close();
+        
         System.out.println("#ConfigSender: Config was successfully sent.");
     }
 }

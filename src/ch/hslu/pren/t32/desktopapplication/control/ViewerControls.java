@@ -56,7 +56,7 @@ public class ViewerControls {
     
     public void startMouseClicked(int luminanceThreshold, String pixelToCm, String visitedPixels, String width, String height) throws IOException{
         if(sender != null) {
-            sender.setLuminanceThreshold(luminanceThreshold);
+            sender.setLuminanceThreshold(luminanceThreshold/100f);
             sender.setPixelToCm(Double.parseDouble(pixelToCm));
             sender.setVisitedPixels(Integer.parseInt(visitedPixels));
             sender.setWidthToObserve(Integer.parseInt(width));
@@ -71,10 +71,11 @@ public class ViewerControls {
     }
 
     private void startConnectionChecking() {
-        if(connectionCheckerThread == null){
+        
             connectionChecker.setHostIP(sender.getHostIP());
             connectionCheckerThread = new Thread(connectionChecker);
             connectionCheckerThread.start();
-        }
+            
+        
     }
 }
