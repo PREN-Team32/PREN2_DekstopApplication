@@ -122,7 +122,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         wasFound.setText("false");
 
         jTextField8.setEditable(false);
-        jTextField8.setText("  Total Time used:");
+        jTextField8.setText(" Time used for detection:");
         jTextField8.setEnabled(false);
 
         timeUsedForDetection.setEditable(false);
