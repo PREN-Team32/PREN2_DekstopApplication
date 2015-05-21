@@ -96,7 +96,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jTextField8" min="-2" pref="249" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="totalTimeUsed" min="-2" pref="102" max="-2" attributes="0"/>
+                          <Component id="timeUsedForDetection" min="-2" pref="102" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jTextField6" min="-2" pref="249" max="-2" attributes="0"/>
@@ -215,7 +215,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextField8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="totalTimeUsed" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="timeUsedForDetection" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
@@ -292,7 +292,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="totalTimeUsed">
+        <Component class="javax.swing.JTextField" name="timeUsedForDetection">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>

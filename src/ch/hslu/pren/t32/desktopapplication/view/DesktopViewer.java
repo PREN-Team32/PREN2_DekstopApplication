@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -58,7 +59,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         jTextField6 = new javax.swing.JTextField();
         wasFound = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
-        totalTimeUsed = new javax.swing.JTextField();
+        timeUsedForDetection = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         drawMainArea = new javax.swing.JButton();
         drawShapeBorder = new javax.swing.JButton();
@@ -124,7 +125,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
         jTextField8.setText("  Total Time used:");
         jTextField8.setEnabled(false);
 
-        totalTimeUsed.setEditable(false);
+        timeUsedForDetection.setEditable(false);
 
         drawMainArea.setText("Draw Line");
         drawMainArea.setEnabled(false);
@@ -235,7 +236,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
                     .addGroup(optionsPanelLayout.createSequentialGroup()
                         .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(totalTimeUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(timeUsedForDetection, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(optionsPanelLayout.createSequentialGroup()
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -328,7 +329,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalTimeUsed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(timeUsedForDetection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(optionsPanelLayout.createSequentialGroup()
@@ -478,7 +479,7 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField pixelToCm;
     private javax.swing.JButton start;
     private javax.swing.JButton testrun;
-    private javax.swing.JTextField totalTimeUsed;
+    private javax.swing.JTextField timeUsedForDetection;
     private javax.swing.JComboBox visitedPixels;
     private javax.swing.JTextField wasFound;
     private javax.swing.JTextField widhtToObserve;
@@ -486,11 +487,13 @@ public class DesktopViewer extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone!");
+        long totalTimeUsed = control.getTotalTimeUsed(System.currentTimeMillis());
+        String timeUsed = String.format("%d sec", TimeUnit.MILLISECONDS.toSeconds(totalTimeUsed));
+        JOptionPane.showMessageDialog(rootPane, "Received return values from Android phone! Time needed: " + timeUsed + " seconds.");
         imageContainer.retrieveImages(receivedValues);
         loadImage(imageContainer.getEditedImage());
         mainArea.setText(Integer.toString(receivedValues.mainArea));
-        totalTimeUsed.setText(Integer.toString(receivedValues.totalTimeUsed));
+        timeUsedForDetection.setText(Integer.toString(receivedValues.totalTimeUsed));
         calculatedAngle.setText(Double.toString(receivedValues.calculatedAngle));
         if(receivedValues.foundShape) {
             wasFound.setText("true");
