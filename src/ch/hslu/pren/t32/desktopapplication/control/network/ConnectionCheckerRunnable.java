@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import sun.misc.BASE64Decoder;
 
 /**
@@ -28,7 +29,6 @@ public class ConnectionCheckerRunnable implements Runnable {
     private static ConnectionCheckerRunnable theInstance = null;
     private ValueItem newValues;
     private String hostIP;
-
     
     private ConnectionCheckerRunnable() {
         super();   
@@ -53,8 +53,15 @@ public class ConnectionCheckerRunnable implements Runnable {
             try (Socket clientSocket = new Socket(hostIP, 11111)) {
                 ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
                 ValueItem tmp = (ValueItem) ois.readObject();
+                
+                if(tmp.finished){
+                   System.out.println("Endsignal erhalten!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                   System.out.println("Time used: " + tmp.totalTimeUsed);
+                   break;
+                }
+                
                 System.out.println("#ConnectionChecker: New Values received.");
-                newValues.overrideValues(tmp);       
+                newValues.overrideValues(tmp);
                 displayImage(Base64toImage(newValues.editedImage));
                 break;
             }
