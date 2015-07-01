@@ -10,7 +10,10 @@ import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import javax.imageio.ImageIO;
@@ -18,6 +21,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 import sun.misc.BASE64Decoder;
 
 /**
@@ -57,12 +62,13 @@ public class ConnectionCheckerRunnable implements Runnable {
                 if(tmp.finished){
                    System.out.println("Endsignal erhalten!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                    System.out.println("Time used: " + tmp.totalTimeUsed);
+                   PlaySound();
                    break;
                 }
                 
                 System.out.println("#ConnectionChecker: New Values received.");
                 newValues.overrideValues(tmp);
-                displayImage(Base64toImage(newValues.editedImage));
+                //displayImage(Base64toImage(newValues.editedImage));
                 break;
             }
             catch(IOException | ClassNotFoundException e) {
@@ -74,7 +80,25 @@ public class ConnectionCheckerRunnable implements Runnable {
         }        
     }
     
-         public void displayImage(Image img2) {
+    public void PlaySound() throws IOException{
+    String gongFile = "C:\\Users\\livio\\Downloads\\smb_mariodie.wav";
+    InputStream in = new FileInputStream(gongFile);
+ 
+    // create an audiostream from the inputstream
+    AudioStream audioStream = new AudioStream(in);
+ 
+    // play the audio clip with the audioplayer class
+    AudioPlayer.player.start(audioStream);
+    
+    //Allenfalls auskommentieren
+    System.out.println("---------------------------------------------------------------");
+    System.out.println("--------------Endsignal erhalten!!!!!!!!-----------------------");    
+    System.out.println("---------------------------------------------------------------");
+    BufferedImage img=ImageIO.read(new File("C:\\temp\\finish.jpg"));
+    displayImage(img);
+    }
+    
+        public void displayImage(Image img2) {
         //BufferedImage img=ImageIO.read(new File("/HelloOpenCV/lena.png"));
         ImageIcon icon = new ImageIcon(img2);
         JFrame frame = new JFrame();
